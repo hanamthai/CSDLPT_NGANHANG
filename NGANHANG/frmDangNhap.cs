@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using NGANHANG.Lib;
 
 namespace NGANHANG
 {
@@ -83,6 +84,10 @@ namespace NGANHANG
             Program.mChinhanh = cmbChiNhanh.SelectedIndex;  //Nếu đăng nhập thành công thì ta sẽ giữ lại thông tin vừa đăng nhập như chi nhánh nào.
             Program.mloginDN = Program.mlogin;              //tài khoản đăng nhập thành công.   -> sẽ còn dùng cho những form sau này.
             Program.passwordDN = Program.password;          //mật khẩu đăng nhập thành công.
+
+            // Setup DbConnection
+            DbConnection.SetDefaultConnectionString($"Data Source={Program.servername};Initial Catalog={Program.database};User ID={Program.mlogin};password={Program.password}");
+
             /*Debug.WriteLine(Program.mlogin);
             Debug.WriteLine(Program.password);*/
             string strLenh = "EXEC SP_Lay_Thong_Tin_NV_Tu_Login '" + Program.mlogin + "'";

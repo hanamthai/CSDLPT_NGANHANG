@@ -43,21 +43,21 @@ namespace NGANHANG
             // 
             this.txtSTKC.Location = new System.Drawing.Point(309, 88);
             this.txtSTKC.Name = "txtSTKC";
-            this.txtSTKC.Size = new System.Drawing.Size(481, 28);
+            this.txtSTKC.Size = new System.Drawing.Size(481, 24);
             this.txtSTKC.TabIndex = 0;
             // 
             // txtSTKN
             // 
             this.txtSTKN.Location = new System.Drawing.Point(309, 195);
             this.txtSTKN.Name = "txtSTKN";
-            this.txtSTKN.Size = new System.Drawing.Size(481, 28);
+            this.txtSTKN.Size = new System.Drawing.Size(481, 24);
             this.txtSTKN.TabIndex = 1;
             // 
             // txtTien
             // 
             this.txtTien.Location = new System.Drawing.Point(309, 308);
             this.txtTien.Name = "txtTien";
-            this.txtTien.Size = new System.Drawing.Size(481, 28);
+            this.txtTien.Size = new System.Drawing.Size(481, 24);
             this.txtTien.TabIndex = 2;
             // 
             // label1
@@ -65,7 +65,7 @@ namespace NGANHANG
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(77, 91);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(176, 21);
+            this.label1.Size = new System.Drawing.Size(138, 17);
             this.label1.TabIndex = 3;
             this.label1.Text = "Số Tài Khoản Chuyển";
             // 
@@ -74,7 +74,7 @@ namespace NGANHANG
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(77, 198);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(158, 21);
+            this.label2.Size = new System.Drawing.Size(125, 17);
             this.label2.TabIndex = 4;
             this.label2.Text = "Số Tài Khoản Nhận";
             // 
@@ -83,7 +83,7 @@ namespace NGANHANG
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(77, 311);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(130, 21);
+            this.label3.Size = new System.Drawing.Size(101, 17);
             this.label3.TabIndex = 5;
             this.label3.Text = "Số Tiền Chuyển";
             // 
@@ -109,7 +109,7 @@ namespace NGANHANG
             // 
             // frm_ChuyenTien
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1000, 562);
             this.Controls.Add(this.btnThoat);
@@ -123,7 +123,7 @@ namespace NGANHANG
             this.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frm_ChuyenTien";
-            this.Text = "frm_ChuyenTien";
+            this.Text = "Chuyển tiền";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -89,7 +89,7 @@ namespace NGANHANG
             this.rib_DanhMuc,
             this.rib_NghiepVu,
             this.rib_BaoCao});
-            this.ribbonControl1.Size = new System.Drawing.Size(1631, 183);
+            this.ribbonControl1.Size = new System.Drawing.Size(1631, 150);
             // 
             // btn_DangNhap
             // 
@@ -107,7 +107,6 @@ namespace NGANHANG
             this.btn_TaoTK.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btn_TaoTK.ImageOptions.Image")));
             this.btn_TaoTK.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btn_TaoTK.ImageOptions.LargeImage")));
             this.btn_TaoTK.Name = "btn_TaoTK";
-            this.btn_TaoTK.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
             this.btn_TaoTK.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btn_TaoTK_ItemClick);
             // 
             // btn_DangXuat
@@ -190,7 +189,7 @@ namespace NGANHANG
             this.ribbonPageGroup1.ItemLinks.Add(this.btn_TaoTK);
             this.ribbonPageGroup1.ItemLinks.Add(this.btn_DangXuat);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-            this.ribbonPageGroup1.Text = "ribbonPageGroup1";
+            this.ribbonPageGroup1.Text = "Tài khoản";
             // 
             // rib_DanhMuc
             // 
@@ -204,7 +203,7 @@ namespace NGANHANG
             // 
             this.ribbonPageGroup2.ItemLinks.Add(this.btn_NhanVien);
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
-            this.ribbonPageGroup2.Text = "ribbonPageGroup2";
+            this.ribbonPageGroup2.Text = "Quản lý";
             // 
             // rib_NghiepVu
             // 
@@ -219,7 +218,7 @@ namespace NGANHANG
             this.ribbonPageGroup3.ItemLinks.Add(this.btn_ChuyenTien);
             this.ribbonPageGroup3.ItemLinks.Add(this.btn_GuiRut);
             this.ribbonPageGroup3.Name = "ribbonPageGroup3";
-            this.ribbonPageGroup3.Text = "ribbonPageGroup3";
+            this.ribbonPageGroup3.Text = "Giao dịch";
             // 
             // rib_BaoCao
             // 
@@ -235,19 +234,19 @@ namespace NGANHANG
             // 
             this.ribbonPageGroup4.ItemLinks.Add(this.btn_SaoKe);
             this.ribbonPageGroup4.Name = "ribbonPageGroup4";
-            this.ribbonPageGroup4.Text = "ribbonPageGroup4";
+            this.ribbonPageGroup4.Text = "Thống kê 1";
             // 
             // ribbonPageGroup5
             // 
             this.ribbonPageGroup5.ItemLinks.Add(this.btn_LietKeTK);
             this.ribbonPageGroup5.Name = "ribbonPageGroup5";
-            this.ribbonPageGroup5.Text = "ribbonPageGroup5";
+            this.ribbonPageGroup5.Text = "Thống kê 2";
             // 
             // ribbonPageGroup6
             // 
             this.ribbonPageGroup6.ItemLinks.Add(this.btn_LietKeKH);
             this.ribbonPageGroup6.Name = "ribbonPageGroup6";
-            this.ribbonPageGroup6.Text = "ribbonPageGroup6";
+            this.ribbonPageGroup6.Text = "Thống kê 3";
             // 
             // xtraTabbedMdiManager1
             // 
@@ -260,33 +259,33 @@ namespace NGANHANG
             this.MANV,
             this.HOTEN,
             this.NHOM});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 656);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 660);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1631, 26);
+            this.statusStrip1.Size = new System.Drawing.Size(1631, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // MANV
             // 
             this.MANV.Name = "MANV";
-            this.MANV.Size = new System.Drawing.Size(52, 20);
+            this.MANV.Size = new System.Drawing.Size(42, 17);
             this.MANV.Text = "MANV";
             // 
             // HOTEN
             // 
             this.HOTEN.Name = "HOTEN";
-            this.HOTEN.Size = new System.Drawing.Size(57, 20);
+            this.HOTEN.Size = new System.Drawing.Size(45, 17);
             this.HOTEN.Text = "HOTEN";
             // 
             // NHOM
             // 
             this.NHOM.Name = "NHOM";
-            this.NHOM.Size = new System.Drawing.Size(55, 20);
+            this.NHOM.Size = new System.Drawing.Size(45, 17);
             this.NHOM.Text = "NHOM";
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1631, 682);
             this.Controls.Add(this.statusStrip1);
@@ -295,7 +294,7 @@ namespace NGANHANG
             this.IsMdiContainer = true;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmMain";
-            this.Text = "frmMain";
+            this.Text = "Ngân hàng";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).EndInit();

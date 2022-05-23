@@ -102,6 +102,8 @@ namespace NGANHANG
                     bdsNV.RemoveCurrent();  // Xóa trên máy hiện tại trước, sau đó mới xóa trên CSDL sau.
                     this.NHANVIENTableAdapter.Connection.ConnectionString = Program.connstr;
                     this.NHANVIENTableAdapter.Update(this.DS.NhanVien); // xóa dữ liệu đó ở CSDL.
+
+                    // Gọi sp xóa tài khoản login nếu có
                 }
                 catch (Exception ex)    // Trong thực tế sẽ có lỗi phát sinh mà thầy Thư cũng không biết.
                 {
