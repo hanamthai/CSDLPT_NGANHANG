@@ -1,0 +1,39 @@
+CREATE PROCEDURE sp_tao_nhan_vien
+	@manv NCHAR(10),
+	@ho NVARCHAR(40),
+	@ten NVARCHAR(10),
+	@dia_chi NVARCHAR(100),
+	@phai NVARCHAR(3),
+	@sdt NVARCHAR(15)
+AS
+BEGIN
+	SET XACT_ABORT ON
+	BEGIN TRY
+		BEGIN TRANSACTION
+
+		-- Kiểm tra mã nhân viên so với chi nhánh còn lại
+		DECLARE @kt_nv bit
+		SELECT @kt_nv = COUNT(*) FROM LINK1.NGANHANG.DBO.NHANVIEN NV WHERE NV.MANV = @manv
+		IF @kt_nv != 0
+			RAISERROR(N'Mã nhân viên đã tồn tại', 16, 1)
+
+		-- Mã chi nhánh hiện tại
+		DECLARE @macn NCHAR(10)
+		SELECT @macn = MACN FROM ChiNhanh
+
+		INSERT INTO NhanVien (MANV, HO, TEN, DIACHI, PHAI, SODT, MACN)
+		VALUES (@manv, @ho, @ten, @dia_chi, @phai, @sdt, @macn)
+
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION
+
+		DECLARE @ErrorMessage VARCHAR(MAX), @ErrorSeverity INT, @ErrorState INT
+		SET @ErrorMessage  = ERROR_MESSAGE()
+		SET @ErrorSeverity = ERROR_SEVERITY()
+		SET @ErrorState    = ERROR_STATE()
+
+		RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState)
+	END CATCH
+END

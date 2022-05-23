@@ -102,7 +102,15 @@ namespace NGANHANG
                 MessageBox.Show("Bạn phải đăng nhập trước khi tạo tài khoản!", "", MessageBoxButtons.OK);
                 return;
             }
-            return;
+
+            Form frm = this.CheckExists(typeof(frmTaoTaiKhoan));
+            if (frm != null) frm.Activate();
+            else
+            {
+                frmTaoTaiKhoan f = new frmTaoTaiKhoan();
+                f.MdiParent = this;
+                f.Show();
+            }
         }
 
         private void btn_DangXuat_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
