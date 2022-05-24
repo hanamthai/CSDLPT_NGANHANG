@@ -93,10 +93,14 @@ namespace NGANHANG
             string strLenh = "EXEC SP_Lay_Thong_Tin_NV_Tu_Login '" + Program.mlogin + "'";
             //Debug.WriteLine(strLenh);
             Program.myReader = Program.ExecSqlDataReader(strLenh);
-            if (Program.myReader == null) return;   //nếu bằng null có nghĩa là không lấy được thông tin nhân viên -> kết thúc.
+            if (Program.myReader == null || !Program.myReader.HasRows) {
+                MessageBox.Show("Bạn không có quyền truy cập!", "", MessageBoxButtons.OK);
+                return;   //nếu bằng null có nghĩa là không lấy được thông tin nhân viên -> kết thúc.  
+            } 
             Program.myReader.Read();    // Khi thực thi xong SP_Lay_Thong... thì nó chỉ trả ra 1 hàng nên ta chỉ cần Read() 1 lần. Nếu nhiều hàng thì ta phải tạo ra một vòng lặp và lặp cho đến khi Read()==null để lấy ra.
 
             Program.username = Program.myReader.GetString(0); // Lay user name      //GetString(0) là cột đầu tiên chứa MANV.
+            Debug.WriteLine("");
             if (Convert.IsDBNull(Program.username)) {
                 MessageBox.Show("Login bạn nhập không có quyền truy cập dữ liệu\n Bạn xem lại username, password", "", MessageBoxButtons.OK);
                 return;

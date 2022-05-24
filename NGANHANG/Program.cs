@@ -20,18 +20,18 @@ namespace NGANHANG
 
         public static SqlDataReader myReader;
         public static String servername = "";
-        public static String username = "";
+        public static String username = ""; // chứa mã nhân viên.
         public static String mlogin = "";
         public static String password = "";
 
         public static String database = "NGANHANG";
         public static String remotelogin = "HTKN";
         public static String remotepassword = "123";
-        public static String mloginDN = "";
-        public static String passwordDN = "";
+        public static String mloginDN = ""; //chứa tài khoản đăng nhập thành công. Dùng cho những form sau này.
+        public static String passwordDN = ""; // chứa mật khẩu đăng nhập thành công.
         public static String mGroup = "";
         public static String mHoten = "";
-        public static int mChinhanh = 0;
+        public static int mChinhanh = 0;    // đăng nhập thành công thuộc chi nhánh nào.
 
         public static BindingSource bds_dspm = new BindingSource(); //giữ bds phân mảnh khi đăng nhập -> chứa TENCN và TENSEVER của V_Get_Subscribes. Từ lúc đăng nhập thành công đến lúc kết thúc.
 
