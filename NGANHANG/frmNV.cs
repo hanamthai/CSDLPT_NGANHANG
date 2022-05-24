@@ -30,7 +30,7 @@ namespace NGANHANG
             panelControl2.Enabled = true;
             bdsNV.AddNew();
             txtMaCN.Text = macn;
-            btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = btnInDSNV.Enabled = btnTaoTK.Enabled = false;
+            btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = btnInDSNV.Enabled = false;
             btnLuu.Enabled = btnPhucHoi.Enabled = true;
             gcNhanVien.Enabled = false;
             check_Luu_HieuChinh = 1;
@@ -42,7 +42,7 @@ namespace NGANHANG
             if (btnThem.Enabled == false) bdsNV.Position = vitri;   //nếu trường hợp đã bấm nút Thêm thì ta sẽ nhảy về lại vị trí trước đó.
             gcNhanVien.Enabled = true;
             panelControl2.Enabled = false;
-            btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = btnInDSNV.Enabled = btnTaoTK.Enabled = true;
+            btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = btnInDSNV.Enabled = true;
             btnLuu.Enabled = btnPhucHoi.Enabled = false;
         }
 
@@ -51,7 +51,7 @@ namespace NGANHANG
             vitri = bdsNV.Position;
             txtMaNV.Enabled = false;    //ta không cho phép sửa mã nhân viên.
             panelControl2.Enabled = true;
-            btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = btnInDSNV.Enabled = btnTaoTK.Enabled = false;
+            btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = btnInDSNV.Enabled = false;
             btnLuu.Enabled = btnPhucHoi.Enabled = true;
             gcNhanVien.Enabled = false;
             check_Luu_HieuChinh = 2;
@@ -195,7 +195,7 @@ namespace NGANHANG
                 return;
             }
             gcNhanVien.Enabled = true;
-            btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = btnInDSNV.Enabled = btnTaoTK.Enabled = true;
+            btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = btnInDSNV.Enabled = true;
             btnLuu.Enabled = btnPhucHoi.Enabled = false;
 
             panelControl2.Enabled = false;
