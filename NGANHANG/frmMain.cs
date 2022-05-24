@@ -142,7 +142,7 @@ namespace NGANHANG
                     }
 
                     rib_BaoCao.Visible = rib_DanhMuc.Visible = rib_NghiepVu.Visible = false;
-                    MANV.Text = ""; HOTEN.Text = ""; NHOM.Text = "";  
+                    MANV.Text = "MANV "; HOTEN.Text = "HOTEN "; NHOM.Text = "NHOM";  
                     MessageBox.Show("Đăng xuất thành công.", "", MessageBoxButtons.OK);
                 }
                 catch(Exception ex)

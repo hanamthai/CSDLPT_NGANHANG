@@ -15,7 +15,7 @@ namespace NGANHANG
     public partial class frmNV : Form
     {
         int vitri = 0;
-        string macn = "";
+        string macn = "";   //Dùng cho btnThem.
         int check_Luu_HieuChinh = 0;    // Nếu chọn btnThem thì ta gán = 1, nếu btnHieuChinh thì ta gán = 2. Mục đích là để biết ta chọn btnThem hay không để chạy SP kiểm tra mã nv bị trùng.
         private SqlDataReader checkMaNV;
         public frmNV()
@@ -30,7 +30,7 @@ namespace NGANHANG
             panelControl2.Enabled = true;
             bdsNV.AddNew();
             txtMaCN.Text = macn;
-            btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = btnInDSNV.Enabled = false;
+            btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = false;
             btnLuu.Enabled = btnPhucHoi.Enabled = true;
             gcNhanVien.Enabled = false;
             check_Luu_HieuChinh = 1;
@@ -42,7 +42,7 @@ namespace NGANHANG
             if (btnThem.Enabled == false) bdsNV.Position = vitri;   //nếu trường hợp đã bấm nút Thêm thì ta sẽ nhảy về lại vị trí trước đó.
             gcNhanVien.Enabled = true;
             panelControl2.Enabled = false;
-            btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = btnInDSNV.Enabled = true;
+            btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = true;
             btnLuu.Enabled = btnPhucHoi.Enabled = false;
         }
 
@@ -51,7 +51,7 @@ namespace NGANHANG
             vitri = bdsNV.Position;
             txtMaNV.Enabled = false;    //ta không cho phép sửa mã nhân viên.
             panelControl2.Enabled = true;
-            btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = btnInDSNV.Enabled = false;
+            btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = false;
             btnLuu.Enabled = btnPhucHoi.Enabled = true;
             gcNhanVien.Enabled = false;
             check_Luu_HieuChinh = 2;
@@ -195,7 +195,7 @@ namespace NGANHANG
                 return;
             }
             gcNhanVien.Enabled = true;
-            btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = btnInDSNV.Enabled = true;
+            btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = true;
             btnLuu.Enabled = btnPhucHoi.Enabled = false;
 
             panelControl2.Enabled = false;
@@ -236,6 +236,33 @@ namespace NGANHANG
             this.Close();
         }
 
-        
+        private void cmbChiNhanh_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbChiNhanh.SelectedValue.ToString() == "System.Data.DataRowView") return;  //Kiểm tra cmb này đã có số liệu hay chưa.Trong thực tế có trường hợp mới mở form lên thì nó tự chạy rồi.Nhưng khi nó chạy mã mình vẫn chưa chọn gì thì sẽ báo lỗi.
+            Program.servername = cmbChiNhanh.SelectedValue.ToString();
+
+            if(cmbChiNhanh.SelectedIndex != Program.mChinhanh)  //nếu ta chọn chi nhánh khác với chi nhánh ở thời điểm đăng nhập thì ta sẽ dùng tk HTKN;
+            {
+                Program.mlogin = Program.remotelogin;
+                Program.password = Program.remotepassword;
+            }
+            else
+            {
+                Program.mlogin = Program.mloginDN;
+                Program.password = Program.passwordDN;
+            }
+            if (Program.KetNoi() == 0) 
+                MessageBox.Show("Lỗi kết nối về chi nhánh mới!", "", MessageBoxButtons.OK);
+            else
+            {
+                this.NHANVIENTableAdapter.Connection.ConnectionString = Program.connstr;    // gán thông tin đăng nhập vào các Adapter tương ứng để fill lấy thông tin đúng với thông tin đăng nhập.
+                this.NHANVIENTableAdapter.Fill(this.DS.NhanVien);
+                this.gD_CHUYENTIENTableAdapter.Connection.ConnectionString = Program.connstr;
+                this.gD_CHUYENTIENTableAdapter.Fill(this.DS.GD_CHUYENTIEN);
+                this.gD_GOIRUTTableAdapter.Connection.ConnectionString = Program.connstr;
+                this.gD_GOIRUTTableAdapter.Fill(this.DS.GD_GOIRUT);
+                macn = ((DataRowView)bdsNV[0])["MACN"].ToString();
+            }
+        }
     }
 }

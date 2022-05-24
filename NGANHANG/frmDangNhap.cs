@@ -46,6 +46,8 @@ namespace NGANHANG
             SqlDataAdapter da = new SqlDataAdapter(cmd, conn_publisher); // Tạo ra một đối tượng thuộc lớp SqlDataAdapter có 2 tham số là chuỗi lệnh và đối tượng SqlConnection.
             da.Fill(dt);    // Muốn tải số liệu từ View,Table từ DataAdapter vào DataTable thì ta dùng Fill -> dt sẽ chứa các danh sách phân mảnh.
             conn_publisher.Close();
+
+            Program.bds_dspm = new BindingSource();
             Program.bds_dspm.DataSource = dt;   // ta gán dspm đó cho bds_dspm ở Program.    // Liên kết số liệu bds_dspm với cmd
 
             cmbChiNhanh.DataSource = Program.bds_dspm;  // gán bds_dspm ở Program cho DataSource ở cmbChiNhanh. //

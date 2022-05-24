@@ -15,7 +15,7 @@ namespace NGANHANG
         /// </summary>
         public static SqlConnection conn = new SqlConnection(); //SqlConnection class thuộc namespace System.Data.SqlClient và được sử dụng để kết nối mở đến CSDL SQL Server.
         public static String connstr;
-        public static String connstr_publisher = "Data Source=SERA;Initial Catalog=NGANHANG;Integrated Security=True";
+        public static String connstr_publisher = "Data Source=DESKTOP-P1FGHF2;Initial Catalog=NGANHANG;Integrated Security=True";
         //public static String connstr_publisher = "Data Source=DESKTOP-P1FGHF2;Initial Catalog=NGANHANG; User ID=sa;Password=123";
 
         public static SqlDataReader myReader;
