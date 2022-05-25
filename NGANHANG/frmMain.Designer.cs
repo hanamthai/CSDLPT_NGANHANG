@@ -42,10 +42,12 @@ namespace NGANHANG
             this.btn_LietKeTK = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.btn_LietKeKH = new DevExpress.XtraBars.BarButtonItem();
+            this.btnKhachHang = new DevExpress.XtraBars.BarButtonItem();
             this.rib_HeThong = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rib_DanhMuc = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPageGroup7 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rib_NghiepVu = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.rib_BaoCao = new DevExpress.XtraBars.Ribbon.RibbonPage();
@@ -78,10 +80,11 @@ namespace NGANHANG
             this.btn_SaoKe,
             this.btn_LietKeTK,
             this.barButtonItem1,
-            this.btn_LietKeKH});
+            this.btn_LietKeKH,
+            this.btnKhachHang});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
             this.ribbonControl1.Margin = new System.Windows.Forms.Padding(4);
-            this.ribbonControl1.MaxItemId = 11;
+            this.ribbonControl1.MaxItemId = 12;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.OptionsMenuMinWidth = 412;
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -89,7 +92,7 @@ namespace NGANHANG
             this.rib_DanhMuc,
             this.rib_NghiepVu,
             this.rib_BaoCao});
-            this.ribbonControl1.Size = new System.Drawing.Size(1631, 150);
+            this.ribbonControl1.Size = new System.Drawing.Size(1631, 183);
             // 
             // btn_DangNhap
             // 
@@ -176,6 +179,15 @@ namespace NGANHANG
             this.btn_LietKeKH.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btn_LietKeKH.ImageOptions.LargeImage")));
             this.btn_LietKeKH.Name = "btn_LietKeKH";
             // 
+            // btnKhachHang
+            // 
+            this.btnKhachHang.Caption = "Khách Hàng";
+            this.btnKhachHang.Id = 11;
+            this.btnKhachHang.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnKhachHang.ImageOptions.Image")));
+            this.btnKhachHang.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnKhachHang.ImageOptions.LargeImage")));
+            this.btnKhachHang.Name = "btnKhachHang";
+            this.btnKhachHang.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnKhachHang_ItemClick);
+            // 
             // rib_HeThong
             // 
             this.rib_HeThong.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -194,7 +206,8 @@ namespace NGANHANG
             // rib_DanhMuc
             // 
             this.rib_DanhMuc.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup2});
+            this.ribbonPageGroup2,
+            this.ribbonPageGroup7});
             this.rib_DanhMuc.Name = "rib_DanhMuc";
             this.rib_DanhMuc.Text = "Danh Mục";
             this.rib_DanhMuc.Visible = false;
@@ -204,6 +217,12 @@ namespace NGANHANG
             this.ribbonPageGroup2.ItemLinks.Add(this.btn_NhanVien);
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
             this.ribbonPageGroup2.Text = "Quản lý";
+            // 
+            // ribbonPageGroup7
+            // 
+            this.ribbonPageGroup7.ItemLinks.Add(this.btnKhachHang);
+            this.ribbonPageGroup7.Name = "ribbonPageGroup7";
+            this.ribbonPageGroup7.Text = "Khách Hàng";
             // 
             // rib_NghiepVu
             // 
@@ -259,33 +278,33 @@ namespace NGANHANG
             this.MANV,
             this.HOTEN,
             this.NHOM});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 660);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 656);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1631, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1631, 26);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // MANV
             // 
             this.MANV.Name = "MANV";
-            this.MANV.Size = new System.Drawing.Size(42, 17);
+            this.MANV.Size = new System.Drawing.Size(52, 20);
             this.MANV.Text = "MANV";
             // 
             // HOTEN
             // 
             this.HOTEN.Name = "HOTEN";
-            this.HOTEN.Size = new System.Drawing.Size(45, 17);
+            this.HOTEN.Size = new System.Drawing.Size(57, 20);
             this.HOTEN.Text = "HOTEN";
             // 
             // NHOM
             // 
             this.NHOM.Name = "NHOM";
-            this.NHOM.Size = new System.Drawing.Size(45, 17);
+            this.NHOM.Size = new System.Drawing.Size(55, 20);
             this.NHOM.Text = "NHOM";
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1631, 682);
             this.Controls.Add(this.statusStrip1);
@@ -334,6 +353,8 @@ namespace NGANHANG
         public System.Windows.Forms.ToolStripStatusLabel MANV;
         public System.Windows.Forms.ToolStripStatusLabel HOTEN;
         public System.Windows.Forms.ToolStripStatusLabel NHOM;
+        private DevExpress.XtraBars.BarButtonItem btnKhachHang;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup7;
     }
 }
 

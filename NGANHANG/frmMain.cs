@@ -153,5 +153,17 @@ namespace NGANHANG
             }
             return;
         }
+
+        private void btnKhachHang_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Form frm = this.CheckExists(typeof(frmKH));
+            if (frm != null) frm.Activate();
+            else
+            {
+                frmKH f = new frmKH();
+                f.MdiParent = this;
+                f.Show();
+            }
+        }
     }
 }

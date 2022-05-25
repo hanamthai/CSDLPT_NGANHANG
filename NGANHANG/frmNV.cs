@@ -44,6 +44,7 @@ namespace NGANHANG
             panelControl2.Enabled = false;
             btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = true;
             btnLuu.Enabled = btnPhucHoi.Enabled = false;
+            this.NHANVIENTableAdapter.Fill(this.DS.NhanVien);// ta tải lại vì khi chọn thêm, sau đó phục hồi thì trên grild vẫn xuất hiện 1 ô trắng do ta chưa load lên lại vào grild.
         }
 
         private void btnHieuChinh_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -164,18 +165,38 @@ namespace NGANHANG
             // ERROR : Khi gọi SP để kiểm tra mã nhân viên có bị trùng hay không thì ta gặp một trường hợp là nút lưu này là lưu cả cho thêm và 
             //lưu cả cho hiệu chỉnh trong khi đó thì phần hiệu chỉnh có thể trùng mã nhân viên, còn thêm nv thì khi tạo không được trùng mã nv.
             // Vậy thì làm sao để ta biết khi nào thì tạo tài khoản khi nào thì hiệu chỉnh????
-                if (check_Luu_HieuChinh == 1)    // Nếu chọn btn thêm thì ta chạy SP kiểm tra có trùng mã nv hay không.
+            if (check_Luu_HieuChinh == 1)    // Nếu chọn btn thêm thì ta chạy SP kiểm tra có trùng mã nv hay không.
+            {
+                string strLenh = "EXEC SP_kiemtraNV_tu_MANV '" + txtMaNV.Text + "'";
+
+                try
                 {
-                    string strLenh = "EXEC SP_TimNV_tu_MANV '" + txtMaNV.Text + "'";
                     checkMaNV = Program.ExecSqlDataReader(strLenh);
-                    if(checkMaNV != null)   //đã tồn tại mã nv trùng.
+                    checkMaNV.Read();
+
+                    if (checkMaNV.GetBoolean(0))   //đã tồn tại cmnd trùng.
                     {
                         MessageBox.Show("Mã nhân viên bị trùng.", "", MessageBoxButtons.OK);
                         txtMaNV.Focus();
                         checkMaNV.Close();
-                    return;
+                        return;
+                    }
+                    else
+                    {
+                        bdsNV.EndEdit();    // kết thúc quá trình tạo. -> Ghi vào trong bds.
+                        bdsNV.ResetCurrentItem();   //Đưa những thông tin đó lên lưới.
+                        this.NHANVIENTableAdapter.Connection.ConnectionString = Program.connstr;
+                        this.NHANVIENTableAdapter.Update(this.DS.NhanVien); // Update trên adapter có 3 nghĩa: vừa là insert, update, delete. Nó tùy vào tình huống cụ thể để đưa lệnh tương ứng.
+                        MessageBox.Show("Thêm thành công!", "", MessageBoxButtons.OK);
+                        checkMaNV.Close();
                     }
                 }
+                catch (Exception ex)
+                {
+                    checkMaNV.Close();
+                    MessageBox.Show("Lỗi: " + ex.Message, "", MessageBoxButtons.OK);
+                }
+            }
             
             try
             {
@@ -261,7 +282,6 @@ namespace NGANHANG
                 this.gD_CHUYENTIENTableAdapter.Fill(this.DS.GD_CHUYENTIEN);
                 this.gD_GOIRUTTableAdapter.Connection.ConnectionString = Program.connstr;
                 this.gD_GOIRUTTableAdapter.Fill(this.DS.GD_GOIRUT);
-                macn = ((DataRowView)bdsNV[0])["MACN"].ToString();
             }
         }
     }
