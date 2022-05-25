@@ -26,6 +26,12 @@ namespace NGANHANG
         }
         private void btn_DangNhap_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            if (Program.mloginDN != "")
+            {
+                MessageBox.Show("Bạn cần đăng xuất trước khi thực hiện hành động này");
+                return;
+            }    
+
             Form frm = this.CheckExists(typeof(frmDangNhap));
             if (frm != null) frm.Activate();
             else
@@ -79,7 +85,10 @@ namespace NGANHANG
                 btn_SaoKe.Enabled = false;
                 btn_LietKeTK.Enabled = false;
                 btn_LietKeKH.Enabled = false;
+                btn_GuiRut.Enabled = true;
+                btn_ChuyenTien.Enabled = true;
             }
+
         }
             private void frmMain_Load(object sender, EventArgs e)
         {

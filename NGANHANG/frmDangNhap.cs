@@ -115,6 +115,8 @@ namespace NGANHANG
             Program.frmChinh.HOTEN.Text = "Họ tên = " + Program.mHoten;
             Program.frmChinh.NHOM.Text = "Nhóm = "+Program.mGroup;
             Program.frmChinh.HienThiMenu();
+
+            Close();
         }
 
         private void btnThoat_Click(object sender, EventArgs e)
