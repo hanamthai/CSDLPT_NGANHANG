@@ -249,5 +249,13 @@ namespace NGANHANG
             gcKH.Enabled = false;
             check_Luu_HieuChinh = 1;
         }
+
+        private void khachHangBindingNavigatorSaveItem_Click(object sender, EventArgs e)
+        {
+            this.Validate();
+            this.bdsKH.EndEdit();
+            this.tableAdapterManager.UpdateAll(this.DS1);
+
+        }
     }
 }
