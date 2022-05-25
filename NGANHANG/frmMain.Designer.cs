@@ -59,6 +59,8 @@ namespace NGANHANG
             this.MANV = new System.Windows.Forms.ToolStripStatusLabel();
             this.HOTEN = new System.Windows.Forms.ToolStripStatusLabel();
             this.NHOM = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ribbonPageGroup8 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.btnMoTK = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabbedMdiManager1)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -81,10 +83,11 @@ namespace NGANHANG
             this.btn_LietKeTK,
             this.barButtonItem1,
             this.btn_LietKeKH,
-            this.btnKhachHang});
+            this.btnKhachHang,
+            this.btnMoTK});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
             this.ribbonControl1.Margin = new System.Windows.Forms.Padding(4);
-            this.ribbonControl1.MaxItemId = 12;
+            this.ribbonControl1.MaxItemId = 13;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.OptionsMenuMinWidth = 412;
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -92,7 +95,7 @@ namespace NGANHANG
             this.rib_DanhMuc,
             this.rib_NghiepVu,
             this.rib_BaoCao});
-            this.ribbonControl1.Size = new System.Drawing.Size(1631, 183);
+            this.ribbonControl1.Size = new System.Drawing.Size(1631, 150);
             // 
             // btn_DangNhap
             // 
@@ -227,7 +230,8 @@ namespace NGANHANG
             // rib_NghiepVu
             // 
             this.rib_NghiepVu.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup3});
+            this.ribbonPageGroup3,
+            this.ribbonPageGroup8});
             this.rib_NghiepVu.Name = "rib_NghiepVu";
             this.rib_NghiepVu.Text = "Nghiệp Vụ";
             this.rib_NghiepVu.Visible = false;
@@ -278,33 +282,48 @@ namespace NGANHANG
             this.MANV,
             this.HOTEN,
             this.NHOM});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 656);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 660);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1631, 26);
+            this.statusStrip1.Size = new System.Drawing.Size(1631, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // MANV
             // 
             this.MANV.Name = "MANV";
-            this.MANV.Size = new System.Drawing.Size(52, 20);
+            this.MANV.Size = new System.Drawing.Size(42, 17);
             this.MANV.Text = "MANV";
             // 
             // HOTEN
             // 
             this.HOTEN.Name = "HOTEN";
-            this.HOTEN.Size = new System.Drawing.Size(57, 20);
+            this.HOTEN.Size = new System.Drawing.Size(45, 17);
             this.HOTEN.Text = "HOTEN";
             // 
             // NHOM
             // 
             this.NHOM.Name = "NHOM";
-            this.NHOM.Size = new System.Drawing.Size(55, 20);
+            this.NHOM.Size = new System.Drawing.Size(45, 17);
             this.NHOM.Text = "NHOM";
+            // 
+            // ribbonPageGroup8
+            // 
+            this.ribbonPageGroup8.ItemLinks.Add(this.btnMoTK);
+            this.ribbonPageGroup8.Name = "ribbonPageGroup8";
+            this.ribbonPageGroup8.Text = "Tài khoản";
+            // 
+            // btnMoTK
+            // 
+            this.btnMoTK.Caption = "Mở tài khoản";
+            this.btnMoTK.Id = 12;
+            this.btnMoTK.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.ImageOptions.Image")));
+            this.btnMoTK.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.ImageOptions.LargeImage")));
+            this.btnMoTK.Name = "btnMoTK";
+            this.btnMoTK.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnMoTK_ItemClick);
             // 
             // frmMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1631, 682);
             this.Controls.Add(this.statusStrip1);
@@ -355,6 +374,8 @@ namespace NGANHANG
         public System.Windows.Forms.ToolStripStatusLabel NHOM;
         private DevExpress.XtraBars.BarButtonItem btnKhachHang;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup7;
+        private DevExpress.XtraBars.BarButtonItem btnMoTK;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup8;
     }
 }
 

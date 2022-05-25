@@ -13,9 +13,9 @@ using System.Windows.Forms;
 
 namespace NGANHANG
 {
-    public partial class frmTaoTaiKhoan : Form
+    public partial class frmTaoTKNV : Form
     {
-        public frmTaoTaiKhoan()
+        public frmTaoTKNV()
         {
             InitializeComponent();
         }
@@ -78,7 +78,7 @@ namespace NGANHANG
                 return;
             }
 
-            string cmdText = "sp_create_account";
+            string cmdText = "sp_tao_tai_khoan_nhan_vien";
             SqlParameter parameterUsername = new SqlParameter("@username", (lueNhanVien.GetSelectedDataRow() as DataRowView)["MANV"]);
             SqlParameter parameterLoginname = new SqlParameter("@loginname", txtLoginName.Text.Trim());
             SqlParameter parameterPassword = new SqlParameter("@password", txtPass.Text);

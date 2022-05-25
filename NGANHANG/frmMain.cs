@@ -106,11 +106,11 @@ namespace NGANHANG
                 return;
             }
 
-            Form frm = this.CheckExists(typeof(frmTaoTaiKhoan));
+            Form frm = this.CheckExists(typeof(frmTaoTKNV));
             if (frm != null) frm.Activate();
             else
             {
-                frmTaoTaiKhoan f = new frmTaoTaiKhoan();
+                frmTaoTKNV f = new frmTaoTKNV();
                 f.MdiParent = this;
                 f.Show();
             }
@@ -161,6 +161,18 @@ namespace NGANHANG
             else
             {
                 frmKH f = new frmKH();
+                f.MdiParent = this;
+                f.Show();
+            }
+        }
+
+        private void btnMoTK_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Form frm = this.CheckExists(typeof(frmTaoTKKH));
+            if (frm != null) frm.Activate();
+            else
+            {
+                frmTaoTKKH f = new frmTaoTKKH();
                 f.MdiParent = this;
                 f.Show();
             }

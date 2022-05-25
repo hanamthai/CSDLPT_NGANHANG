@@ -1,39 +1,142 @@
-CREATE PROCEDURE sp_tao_nhan_vien
-	@manv NCHAR(10),
-	@ho NVARCHAR(40),
-	@ten NVARCHAR(10),
-	@dia_chi NVARCHAR(100),
-	@phai NVARCHAR(3),
-	@sdt NVARCHAR(15)
+CREATE PROCEDURE sp_tao_tai_khoan_khach_hang
+	@stk NCHAR(9),
+	@cmnd NCHAR(10)
 AS
 BEGIN
 	SET XACT_ABORT ON
 	BEGIN TRY
 		BEGIN TRANSACTION
 
-		-- Kiểm tra mã nhân viên so với chi nhánh còn lại
-		DECLARE @kt_nv bit
-		SELECT @kt_nv = COUNT(*) FROM LINK1.NGANHANG.DBO.NHANVIEN NV WHERE NV.MANV = @manv
-		IF @kt_nv != 0
-			RAISERROR(N'Mã nhân viên đã tồn tại', 16, 1)
+		-- Kiem tra su ton tai cua khach hang bang CMND
+		DECLARE @ktkh INT
+		SELECT @ktkh = COUNT(*) FROM KhachHang
+
+		IF @ktkh = 0
+		BEGIN
+			SELECT @ktkh = COUNT(*) FROM LINK1.NGANHANG.DBO.KhachHang WHERE CMND = @cmnd
+
+			if @ktkh = 0
+				RAISERROR(N'Khách hàng không tồn tại', 16, 1)
+		END
 
 		-- Mã chi nhánh hiện tại
 		DECLARE @macn NCHAR(10)
 		SELECT @macn = MACN FROM ChiNhanh
 
-		INSERT INTO NhanVien (MANV, HO, TEN, DIACHI, PHAI, SODT, MACN)
-		VALUES (@manv, @ho, @ten, @dia_chi, @phai, @sdt, @macn)
+		INSERT INTO TaiKhoan (SOTK, CMND, SODU, MACN)
+		VALUES (@stk, @cmnd, 0, @macn)
 
 		COMMIT TRANSACTION
 	END TRY
 	BEGIN CATCH
-		ROLLBACK TRANSACTION
-
+        ROLLBACK TRANSACTION
+		
 		DECLARE @ErrorMessage VARCHAR(MAX), @ErrorSeverity INT, @ErrorState INT
 		SET @ErrorMessage  = ERROR_MESSAGE()
 		SET @ErrorSeverity = ERROR_SEVERITY()
 		SET @ErrorState    = ERROR_STATE()
 
 		RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState)
-	END CATCH
+    END CATCH
+END
+
+---
+
+CREATE PROCEDURE sp_tao_tai_khoan_nhan_vien
+	@username NCHAR(10),
+	@loginname NVARCHAR(50),
+	@password NVARCHAR(50)
+AS
+BEGIN
+	SET XACT_ABORT ON
+	BEGIN TRY
+		BEGIN TRANSACTION
+
+		-- Check NhanVien
+		DECLARE @cknv INT
+		SELECT @cknv = COUNT(*) FROM NhanVien WHERE MANV = @username
+		IF @cknv = 0
+			RAISERROR('Mã nhân viên không tồn tại hoặc không thuộc chi nhánh này', 16, 1)	
+
+		DECLARE @sql NVARCHAR(MAX)
+
+		-- Create login
+		SET @sql = 'CREATE LOGIN ' + @loginname + ' WITH PASSWORD = ''' + @password + ''''
+		EXECUTE (@sql)
+
+		-- Create user
+		SET @sql = 'CREATE USER ' + @username + ' FOR LOGIN ' + @loginname
+		EXECUTE (@sql)
+
+		-- Get current (Support Alter role)
+		DECLARE @cusername NCHAR(10)
+		SELECT @cusername = NAME FROM SYS.sysusers WHERE SID = SUSER_SID(SUSER_NAME())
+
+		-- Alter role
+		IF IS_ROLEMEMBER ('ngan_hang', @cusername) = 1
+			SET @sql = 'ALTER ROLE nhan_vien ADD MEMBER ' + @username
+		ELSE IF IS_ROLEMEMBER ('chi_nhanh', @cusername) = 1
+			SET @sql = 'ALTER ROLE chi_nhanh ADD MEMBER ' + @username
+		ELSE
+			RAISERROR('Hành động bị từ chối do không rõ quyền hạn', 16, 1)
+
+		EXECUTE (@sql)
+
+		-- Alter system role
+		SET @sql = 'ALTER SERVER ROLE securityadmin ADD MEMBER ' + @loginname
+		EXECUTE (@sql)
+
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+        ROLLBACK TRANSACTION
+		
+		DECLARE @ErrorMessage VARCHAR(MAX), @ErrorSeverity INT, @ErrorState INT
+		SET @ErrorMessage  = ERROR_MESSAGE()
+		SET @ErrorSeverity = ERROR_SEVERITY()
+		SET @ErrorState    = ERROR_STATE()
+
+		RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState)
+    END CATCH
+END
+
+---
+
+CREATE PROCEDURE sp_xoa_tai_khoan_nhan_vien
+	@manv NCHAR(10)
+AS
+BEGIN
+	SET XACT_ABORT ON
+	BEGIN TRY
+		BEGIN TRANSACTION
+
+		DECLARE @loginname NVARCHAR(30)
+
+		-- Find login nameby @manv
+		SELECT @loginname = L.name FROM sys.sysusers U
+		INNER JOIN sys.syslogins L ON U.sid = L.sid
+		WHERE U.name = @manv
+
+		DECLARE @sql NVARCHAR(MAX)
+
+		-- Drop user
+		SET @sql = 'DROP USER ' + @manv
+		EXECUTE(@sql)
+
+		-- Drop login
+		SET @sql = 'DROP LOGIN ' + @loginname
+		EXECUTE(@sql)
+
+	COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+        ROLLBACK TRANSACTION
+		
+		DECLARE @ErrorMessage VARCHAR(MAX), @ErrorSeverity INT, @ErrorState INT
+		SET @ErrorMessage  = ERROR_MESSAGE()
+		SET @ErrorSeverity = ERROR_SEVERITY()
+		SET @ErrorState    = ERROR_STATE()
+
+		RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState)
+    END CATCH
 END

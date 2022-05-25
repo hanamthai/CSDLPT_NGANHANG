@@ -89,11 +89,17 @@
     <Compile Include="frmNV.Designer.cs">
       <DependentUpon>frmNV.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmTaoTaiKhoan.cs">
+    <Compile Include="frmTaoTKKH.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmTaoTaiKhoan.Designer.cs">
-      <DependentUpon>frmTaoTaiKhoan.cs</DependentUpon>
+    <Compile Include="frmTaoTKKH.Designer.cs">
+      <DependentUpon>frmTaoTKKH.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTaoTKNV.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTaoTKNV.Designer.cs">
+      <DependentUpon>frmTaoTKNV.cs</DependentUpon>
     </Compile>
     <Compile Include="frm_ChuyenTien.cs">
       <SubType>Form</SubType>
@@ -122,8 +128,11 @@
     <EmbeddedResource Include="frmNV.resx">
       <DependentUpon>frmNV.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmTaoTaiKhoan.resx">
-      <DependentUpon>frmTaoTaiKhoan.cs</DependentUpon>
+    <EmbeddedResource Include="frmTaoTKKH.resx">
+      <DependentUpon>frmTaoTKKH.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTaoTKNV.resx">
+      <DependentUpon>frmTaoTKNV.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frm_ChuyenTien.resx">
       <DependentUpon>frm_ChuyenTien.cs</DependentUpon>

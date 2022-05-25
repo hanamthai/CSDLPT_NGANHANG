@@ -1,6 +1,6 @@
 ﻿namespace NGANHANG
 {
-    partial class frmTaoTaiKhoan
+    partial class frmTaoTKNV
     {
         /// <summary>
         /// Required designer variable.
