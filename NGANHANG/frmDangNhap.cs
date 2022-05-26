@@ -52,6 +52,7 @@ namespace NGANHANG
 
             cmbChiNhanh.DataSource = Program.bds_dspm;  // gán bds_dspm ở Program cho DataSource ở cmbChiNhanh. //
             cmbChiNhanh.DisplayMember = "TENCN"; cmbChiNhanh.ValueMember = "TENSERVER";
+            cmbChiNhanh.DropDownStyle = ComboBoxStyle.DropDownList;
         }
         
 
@@ -59,7 +60,7 @@ namespace NGANHANG
         {
             if (KetNoi_CSDLGOC() == 0) return; // nếu hàm KetNoi_CSDLGOC() == 0 -> đăng nhập thất bại
             LayDSPM("SELECT * FROM V_Get_Subscribes");  // Lấy ra danh sách các phân mảnh từ V_Get_Subscribles.
-            cmbChiNhanh.SelectedIndex = 1;cmbChiNhanh.SelectedIndex = 0;
+            cmbChiNhanh.SelectedIndex = 1; cmbChiNhanh.SelectedIndex = 0;
         }
 
         private void label1_Click(object sender, EventArgs e){}
@@ -83,12 +84,6 @@ namespace NGANHANG
             }
             Program.mlogin = txtLogin.Text; Program.password = txtPass.Text;
             if (Program.KetNoi() == 0) return;
-            Program.mChinhanh = cmbChiNhanh.SelectedIndex;  //Nếu đăng nhập thành công thì ta sẽ giữ lại thông tin vừa đăng nhập như chi nhánh nào.
-            Program.mloginDN = Program.mlogin;              //tài khoản đăng nhập thành công.   -> sẽ còn dùng cho những form sau này.
-            Program.passwordDN = Program.password;          //mật khẩu đăng nhập thành công.
-
-            // Setup DbConnection
-            DbConnection.SetDefaultConnectionString($"Data Source={Program.servername};Initial Catalog={Program.database};User ID={Program.mlogin};password={Program.password}");
 
             /*Debug.WriteLine(Program.mlogin);
             Debug.WriteLine(Program.password);*/
@@ -107,6 +102,14 @@ namespace NGANHANG
                 MessageBox.Show("Login bạn nhập không có quyền truy cập dữ liệu\n Bạn xem lại username, password", "", MessageBoxButtons.OK);
                 return;
             }
+
+            // Setup DbConnection
+            DbConnection.SetDefaultConnectionString($"Data Source={Program.servername};Initial Catalog={Program.database};User ID={Program.mlogin};password={Program.password}");
+
+            Program.mChinhanh = cmbChiNhanh.SelectedIndex;  //Nếu đăng nhập thành công thì ta sẽ giữ lại thông tin vừa đăng nhập như chi nhánh nào.
+            Program.mloginDN = Program.mlogin;              //tài khoản đăng nhập thành công.   -> sẽ còn dùng cho những form sau này.
+            Program.passwordDN = Program.password;          //mật khẩu đăng nhập thành công.
+
             Program.mHoten = Program.myReader.GetString(1); //GetString(1) chứa HOTEN
             Program.mGroup = Program.myReader.GetString(2); //GetString(2) chứa NHOM
             Program.myReader.Close();

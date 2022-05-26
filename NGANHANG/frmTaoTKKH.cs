@@ -22,7 +22,7 @@ namespace NGANHANG
         private void frmTaoTKKH_Load(object sender, EventArgs e)
         {
             dS1.EnforceConstraints = false;
-            this.khachHangTableAdapter.Connection.ConnectionString = Program.connstr;
+            this.khachHangTableAdapter.Connection.ConnectionString = DbConnection.GetDefaultConnectionString();
             this.khachHangTableAdapter.Fill(this.dS1.KhachHang);
 
             // dS.Nhanvien empty case

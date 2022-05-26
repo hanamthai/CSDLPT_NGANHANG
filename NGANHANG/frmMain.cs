@@ -79,6 +79,7 @@ namespace NGANHANG
                 btn_SaoKe.Enabled = true;
                 btn_LietKeTK.Enabled = true;
                 btn_LietKeKH.Enabled = true;
+                btnMoTK.Enabled = false;
             }
             if(Program.mGroup == "CHINHANH")
             {
@@ -87,6 +88,7 @@ namespace NGANHANG
                 btn_LietKeKH.Enabled = false;
                 btn_GuiRut.Enabled = true;
                 btn_ChuyenTien.Enabled = true;
+                btnMoTK.Enabled = true;
             }
 
         }
@@ -109,7 +111,7 @@ namespace NGANHANG
 
         private void btn_TaoTK_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if(Program.mlogin == "")
+            if(Program.mloginDN == "")
             {
                 MessageBox.Show("Bạn phải đăng nhập trước khi tạo tài khoản!", "", MessageBoxButtons.OK);
                 return;

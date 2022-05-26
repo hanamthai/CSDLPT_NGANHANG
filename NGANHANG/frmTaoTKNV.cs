@@ -23,7 +23,7 @@ namespace NGANHANG
         private void frmTaoTaiKhoan_Load(object sender, EventArgs e)
         {
             dS.EnforceConstraints = false;
-            this.nhanVienTableAdapter.Connection.ConnectionString = Program.connstr;
+            this.nhanVienTableAdapter.Connection.ConnectionString = DbConnection.GetDefaultConnectionString();
             this.nhanVienTableAdapter.Fill(this.dS.NhanVien);
 
             // dS.Nhanvien empty case

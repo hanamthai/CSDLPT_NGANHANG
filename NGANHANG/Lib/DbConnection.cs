@@ -15,6 +15,11 @@ namespace NGANHANG.Lib
             defaultConnectionString = connectionString;
         }
 
+        public static string GetDefaultConnectionString()
+        {
+            return defaultConnectionString;
+        }
+
         public static int ExecuteNonQuery(string commandText, CommandType commandType, params SqlParameter[] parameters)
         {
             using (SqlConnection conn = new SqlConnection(defaultConnectionString))

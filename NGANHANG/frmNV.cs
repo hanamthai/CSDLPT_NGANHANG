@@ -39,12 +39,12 @@ namespace NGANHANG
         private void btnPhucHoi_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)  // Có 2 trường hợp: Thêm, Sửa.
         {
             bdsNV.CancelEdit();
+            this.NHANVIENTableAdapter.Fill(this.DS.NhanVien);// ta tải lại vì khi chọn thêm, sau đó phục hồi thì trên grild vẫn xuất hiện 1 ô trắng do ta chưa load lên lại vào grild.
             if (btnThem.Enabled == false) bdsNV.Position = vitri;   //nếu trường hợp đã bấm nút Thêm thì ta sẽ nhảy về lại vị trí trước đó.
             gcNhanVien.Enabled = true;
             panelControl2.Enabled = false;
             btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = true;
             btnLuu.Enabled = btnPhucHoi.Enabled = false;
-            this.NHANVIENTableAdapter.Fill(this.DS.NhanVien);// ta tải lại vì khi chọn thêm, sau đó phục hồi thì trên grild vẫn xuất hiện 1 ô trắng do ta chưa load lên lại vào grild.
         }
 
         private void btnHieuChinh_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -103,6 +103,12 @@ namespace NGANHANG
                     bdsNV.RemoveCurrent();  // Xóa trên máy hiện tại trước, sau đó mới xóa trên CSDL sau.
                     this.NHANVIENTableAdapter.Connection.ConnectionString = Program.connstr;
                     this.NHANVIENTableAdapter.Update(this.DS.NhanVien); // xóa dữ liệu đó ở CSDL.
+
+                    try
+                    {
+                        Program.ExecSqlNonQuery($"EXEC sp_xoa_tai_khoan_nhan_vien '{manv}'");
+                    }
+                    catch { }
 
                     // Gọi sp xóa tài khoản login nếu có
                 }
@@ -195,26 +201,30 @@ namespace NGANHANG
                 {
                     checkMaNV.Close();
                     MessageBox.Show("Lỗi: " + ex.Message, "", MessageBoxButtons.OK);
+                    return;
                 }
             }
+            else
+            {
+                try
+                {
+                    bdsNV.EndEdit();    // kết thúc quá trình hiệu chỉnh. -> Ghi vào trong bds.
+                    bdsNV.ResetCurrentItem();   //Đưa những thông tin đó lên lưới.
+                    this.NHANVIENTableAdapter.Connection.ConnectionString = Program.connstr;
+                    this.NHANVIENTableAdapter.Update(this.DS.NhanVien); // Update trên adapter có 3 nghĩa: vừa là insert, update, delete. Nó tùy vào tình huống cụ thể để đưa lệnh tương ứng.
+                }
+                catch (Exception ex)
+                {
+                    /*if (ex.Message.Contains("PRIMARY")) {
+                        MessageBox.Show("Mã nhân viên bị trùng.\n" + ex.Message, "", MessageBoxButtons.OK);  // ERROR: Nếu bị trùng mã nv ở site khác thì không báo lỗi. Suy nghĩ mãi nhưng chưa khắc phục được.
+                        txtMaNV.Focus();
+                    } 
+                    else*/
+                    MessageBox.Show("Lỗi ghi nhân viên.\n" + ex.Message, "", MessageBoxButtons.OK);
+                    return;
+                }
+            }    
             
-            try
-            {
-                bdsNV.EndEdit();    // kết thúc quá trình hiệu chỉnh. -> Ghi vào trong bds.
-                bdsNV.ResetCurrentItem();   //Đưa những thông tin đó lên lưới.
-                this.NHANVIENTableAdapter.Connection.ConnectionString = Program.connstr;
-                this.NHANVIENTableAdapter.Update(this.DS.NhanVien); // Update trên adapter có 3 nghĩa: vừa là insert, update, delete. Nó tùy vào tình huống cụ thể để đưa lệnh tương ứng.
-            }
-            catch (Exception ex)
-            {
-                /*if (ex.Message.Contains("PRIMARY")) {
-                    MessageBox.Show("Mã nhân viên bị trùng.\n" + ex.Message, "", MessageBoxButtons.OK);  // ERROR: Nếu bị trùng mã nv ở site khác thì không báo lỗi. Suy nghĩ mãi nhưng chưa khắc phục được.
-                    txtMaNV.Focus();
-                } 
-                else*/
-                MessageBox.Show("Lỗi ghi nhân viên.\n" + ex.Message, "", MessageBoxButtons.OK);
-                return;
-            }
             gcNhanVien.Enabled = true;
             btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = true;
             btnLuu.Enabled = btnPhucHoi.Enabled = false;

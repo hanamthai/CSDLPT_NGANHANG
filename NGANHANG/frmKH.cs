@@ -129,21 +129,25 @@ namespace NGANHANG
                 catch (Exception ex){
                     checkCMND.Close();
                     MessageBox.Show("Lỗi: " + ex.Message, "", MessageBoxButtons.OK);
+                    return;
                 }
             }
-
-            try
-            {   //dùng cho hiệu chỉnh
-                bdsKH.EndEdit();    // kết thúc quá trình hiệu chỉnh. -> Ghi vào trong bds.
-                bdsKH.ResetCurrentItem();   //Đưa những thông tin đó lên lưới.
-                this.KHACHHANGTableAdapter.Connection.ConnectionString = Program.connstr;
-                this.KHACHHANGTableAdapter.Update(this.DS1.KhachHang); // Update trên adapter có 3 nghĩa: vừa là insert, update, delete. Nó tùy vào tình huống cụ thể để đưa lệnh tương ứng.
-            }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Lỗi ghi khách hàng.\n" + ex.Message, "", MessageBoxButtons.OK);
-                return;
-            }
+                try
+                {   //dùng cho hiệu chỉnh
+                    bdsKH.EndEdit();    // kết thúc quá trình hiệu chỉnh. -> Ghi vào trong bds.
+                    bdsKH.ResetCurrentItem();   //Đưa những thông tin đó lên lưới.
+                    this.KHACHHANGTableAdapter.Connection.ConnectionString = Program.connstr;
+                    this.KHACHHANGTableAdapter.Update(this.DS1.KhachHang); // Update trên adapter có 3 nghĩa: vừa là insert, update, delete. Nó tùy vào tình huống cụ thể để đưa lệnh tương ứng.
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi ghi khách hàng.\n" + ex.Message, "", MessageBoxButtons.OK);
+                    return;
+                }
+            }    
+
             gcKH.Enabled = true;
             btnThem.Enabled = btnXoa.Enabled = btnHieuChinh.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = true;
             btnLuu.Enabled = btnPhucHoi.Enabled = false;
@@ -185,12 +189,12 @@ namespace NGANHANG
         private void btnPhucHoi_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             bdsKH.CancelEdit();
+            this.KHACHHANGTableAdapter.Fill(this.DS1.KhachHang);    // ta tải lại vì khi chọn thêm, sau đó phục hồi thì trên grild vẫn xuất hiện 1 ô trắng do ta chưa load lên lại vào grild.
             if (btnThem.Enabled == false) bdsKH.Position = vitri;   //nếu trường hợp đã bấm nút Thêm thì ta sẽ nhảy về lại vị trí trước đó.
             gcKH.Enabled = true;
             panelControl2.Enabled = false;
             btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnTaiLai.Enabled = btnThoat.Enabled = true;
             btnLuu.Enabled = btnPhucHoi.Enabled = false;
-            this.KHACHHANGTableAdapter.Fill(this.DS1.KhachHang);    // ta tải lại vì khi chọn thêm, sau đó phục hồi thì trên grild vẫn xuất hiện 1 ô trắng do ta chưa load lên lại vào grild.
         }
 
         private void btnTaiLai_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

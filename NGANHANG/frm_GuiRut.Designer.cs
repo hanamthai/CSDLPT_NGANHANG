@@ -36,7 +36,7 @@ namespace NGANHANG
             this.label3 = new System.Windows.Forms.Label();
             this.btnXacNhan = new System.Windows.Forms.Button();
             this.btnThoat = new System.Windows.Forms.Button();
-            this.txtLoaiGD = new System.Windows.Forms.TextBox();
+            this.cmbGuiRut = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // txtSTK
@@ -44,7 +44,7 @@ namespace NGANHANG
             this.txtSTK.Location = new System.Drawing.Point(253, 109);
             this.txtSTK.Margin = new System.Windows.Forms.Padding(4);
             this.txtSTK.Name = "txtSTK";
-            this.txtSTK.Size = new System.Drawing.Size(559, 24);
+            this.txtSTK.Size = new System.Drawing.Size(559, 28);
             this.txtSTK.TabIndex = 0;
             // 
             // label1
@@ -52,7 +52,7 @@ namespace NGANHANG
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(110, 112);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 17);
+            this.label1.Size = new System.Drawing.Size(114, 21);
             this.label1.TabIndex = 1;
             this.label1.Text = "Số Tài Khoản";
             // 
@@ -60,7 +60,7 @@ namespace NGANHANG
             // 
             this.txtTien.Location = new System.Drawing.Point(253, 204);
             this.txtTien.Name = "txtTien";
-            this.txtTien.Size = new System.Drawing.Size(559, 24);
+            this.txtTien.Size = new System.Drawing.Size(559, 28);
             this.txtTien.TabIndex = 2;
             // 
             // label2
@@ -68,7 +68,7 @@ namespace NGANHANG
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(110, 207);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(88, 17);
+            this.label2.Size = new System.Drawing.Size(113, 21);
             this.label2.TabIndex = 4;
             this.label2.Text = "Nhập Số Tiền";
             // 
@@ -77,7 +77,7 @@ namespace NGANHANG
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(110, 307);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(97, 17);
+            this.label3.Size = new System.Drawing.Size(124, 21);
             this.label3.TabIndex = 5;
             this.label3.Text = "Loại Giao Dịch";
             // 
@@ -101,19 +101,21 @@ namespace NGANHANG
             this.btnThoat.UseVisualStyleBackColor = true;
             this.btnThoat.Click += new System.EventHandler(this.btnThoat_Click);
             // 
-            // txtLoaiGD
+            // cmbGuiRut
             // 
-            this.txtLoaiGD.Location = new System.Drawing.Point(253, 304);
-            this.txtLoaiGD.Name = "txtLoaiGD";
-            this.txtLoaiGD.Size = new System.Drawing.Size(559, 24);
-            this.txtLoaiGD.TabIndex = 8;
+            this.cmbGuiRut.FormattingEnabled = true;
+            this.cmbGuiRut.Location = new System.Drawing.Point(253, 307);
+            this.cmbGuiRut.Name = "cmbGuiRut";
+            this.cmbGuiRut.Size = new System.Drawing.Size(559, 28);
+            this.cmbGuiRut.TabIndex = 8;
+            this.cmbGuiRut.SelectedIndexChanged += new System.EventHandler(this.cmbGuiRut_SelectedIndexChanged);
             // 
             // frm_GuiRut
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1129, 543);
-            this.Controls.Add(this.txtLoaiGD);
+            this.Controls.Add(this.cmbGuiRut);
             this.Controls.Add(this.btnThoat);
             this.Controls.Add(this.btnXacNhan);
             this.Controls.Add(this.label3);
@@ -125,6 +127,7 @@ namespace NGANHANG
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frm_GuiRut";
             this.Text = "Rút tiền";
+            this.Load += new System.EventHandler(this.frm_GuiRut_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -139,6 +142,6 @@ namespace NGANHANG
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnXacNhan;
         private System.Windows.Forms.Button btnThoat;
-        private System.Windows.Forms.TextBox txtLoaiGD;
+        private System.Windows.Forms.ComboBox cmbGuiRut;
     }
 }
