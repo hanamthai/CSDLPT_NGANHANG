@@ -18,5 +18,10 @@ https://github.com/metailurini/cinema-mananger.git
 ```
 ## Usage:
 You just need to clone the project to your local computer and open it with visual studio.
+  ### Note:
+    ```diff
+    - You need to create SP on main server in sql server and push them down to fragmented sites.
+    - I have saved the SP in the file stored_procedure.txt
+    ```
 ## Contributer:
 Thanks to Duykhanhrk for supporting me in this project.
