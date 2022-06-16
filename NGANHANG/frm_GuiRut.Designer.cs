@@ -37,6 +37,8 @@ namespace NGANHANG
             this.btnXacNhan = new System.Windows.Forms.Button();
             this.btnThoat = new System.Windows.Forms.Button();
             this.cmbGuiRut = new System.Windows.Forms.ComboBox();
+            this.btnCheckTK = new System.Windows.Forms.Button();
+            this.txtTenND = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtSTK
@@ -110,11 +112,32 @@ namespace NGANHANG
             this.cmbGuiRut.TabIndex = 8;
             this.cmbGuiRut.SelectedIndexChanged += new System.EventHandler(this.cmbGuiRut_SelectedIndexChanged);
             // 
+            // btnCheckTK
+            // 
+            this.btnCheckTK.Location = new System.Drawing.Point(839, 105);
+            this.btnCheckTK.Name = "btnCheckTK";
+            this.btnCheckTK.Size = new System.Drawing.Size(93, 35);
+            this.btnCheckTK.TabIndex = 10;
+            this.btnCheckTK.Text = "Kiểm Tra";
+            this.btnCheckTK.UseVisualStyleBackColor = true;
+            this.btnCheckTK.Click += new System.EventHandler(this.btnCheckTK_Click);
+            // 
+            // txtTenND
+            // 
+            this.txtTenND.AutoSize = true;
+            this.txtTenND.Location = new System.Drawing.Point(971, 116);
+            this.txtTenND.Name = "txtTenND";
+            this.txtTenND.Size = new System.Drawing.Size(128, 21);
+            this.txtTenND.TabIndex = 12;
+            this.txtTenND.Text = "Tên người dùng";
+            // 
             // frm_GuiRut
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1129, 543);
+            this.ClientSize = new System.Drawing.Size(1368, 543);
+            this.Controls.Add(this.txtTenND);
+            this.Controls.Add(this.btnCheckTK);
             this.Controls.Add(this.cmbGuiRut);
             this.Controls.Add(this.btnThoat);
             this.Controls.Add(this.btnXacNhan);
@@ -143,5 +166,7 @@ namespace NGANHANG
         private System.Windows.Forms.Button btnXacNhan;
         private System.Windows.Forms.Button btnThoat;
         private System.Windows.Forms.ComboBox cmbGuiRut;
+        private System.Windows.Forms.Button btnCheckTK;
+        private System.Windows.Forms.Label txtTenND;
     }
 }

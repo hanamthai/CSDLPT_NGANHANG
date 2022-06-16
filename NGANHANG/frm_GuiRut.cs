@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace NGANHANG
     public partial class frm_GuiRut : Form
     {
         string LoaiGD = "";
+
+        private SqlDataReader reader;
 
         public frm_GuiRut()
         {
@@ -58,6 +61,18 @@ namespace NGANHANG
         private void cmbGuiRut_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoaiGD = cmbGuiRut.Text;
+        }
+
+        private void btnCheckTK_Click(object sender, EventArgs e)
+        {
+            reader = Program.ExecSqlDataReader($"EXEC SP_ttkh_tu_sotk '{txtSTK.Text.Trim()}'");
+            if (reader == null)
+                return;
+
+            reader.Read();
+            txtTenND.Text = (string)reader["HO"] + " " + (string)reader["TEN"];
+
+            reader.Close();
         }
     }
 }

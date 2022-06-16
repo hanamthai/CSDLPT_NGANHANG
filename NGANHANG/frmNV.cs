@@ -121,7 +121,7 @@ namespace NGANHANG
                     return;
                 }
             }
-            if (bdsNV.Count == 0) btnXoa.Enabled = false;   // trường hợp ta xóa hết nhân viên hoặc trong Grid không có ai thì ta làm mờ nút xóa đi. Nếu không nó sẽ báo lỗi ở dòng code 93 là khi ta lấy manv trước khi xóa ra thì bdsNV.Position không tìm thấy vị trí nào thì nó báo lỗi.
+            if (bdsNV.Count == 0) btnXoa.Enabled = false;   // trường hợp ta xóa hết nhân viên hoặc trong Grid không có ai thì ta làm mờ nút xóa đi. Nếu không nó sẽ báo lỗi ở dòng code 102 là khi ta lấy manv trước khi xóa ra thì bdsNV.Position không tìm thấy vị trí nào thì nó báo lỗi.
         }
 
         private void btnLuu_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

@@ -37,6 +37,10 @@ namespace NGANHANG
             this.btnXacNhan = new System.Windows.Forms.Button();
             this.btnThoat = new System.Windows.Forms.Button();
             this.txtTien = new System.Windows.Forms.TextBox();
+            this.btnCheckTKC = new System.Windows.Forms.Button();
+            this.btnCheckTKN = new System.Windows.Forms.Button();
+            this.txtTenNC = new System.Windows.Forms.Label();
+            this.txtTenNN = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtSTKC
@@ -107,11 +111,53 @@ namespace NGANHANG
             this.txtTien.Size = new System.Drawing.Size(481, 28);
             this.txtTien.TabIndex = 2;
             // 
+            // btnCheckTKC
+            // 
+            this.btnCheckTKC.Location = new System.Drawing.Point(844, 84);
+            this.btnCheckTKC.Name = "btnCheckTKC";
+            this.btnCheckTKC.Size = new System.Drawing.Size(93, 35);
+            this.btnCheckTKC.TabIndex = 8;
+            this.btnCheckTKC.Text = "Kiểm Tra";
+            this.btnCheckTKC.UseVisualStyleBackColor = true;
+            this.btnCheckTKC.Click += new System.EventHandler(this.btnCheckTKC_Click);
+            // 
+            // btnCheckTKN
+            // 
+            this.btnCheckTKN.Location = new System.Drawing.Point(844, 191);
+            this.btnCheckTKN.Name = "btnCheckTKN";
+            this.btnCheckTKN.Size = new System.Drawing.Size(93, 35);
+            this.btnCheckTKN.TabIndex = 9;
+            this.btnCheckTKN.Text = "Kiểm Tra";
+            this.btnCheckTKN.UseVisualStyleBackColor = true;
+            this.btnCheckTKN.Click += new System.EventHandler(this.btnCheckTKN_Click);
+            // 
+            // txtTenNC
+            // 
+            this.txtTenNC.AutoSize = true;
+            this.txtTenNC.Location = new System.Drawing.Point(973, 91);
+            this.txtTenNC.Name = "txtTenNC";
+            this.txtTenNC.Size = new System.Drawing.Size(144, 21);
+            this.txtTenNC.TabIndex = 10;
+            this.txtTenNC.Text = "Tên người chuyển";
+            // 
+            // txtTenNN
+            // 
+            this.txtTenNN.AutoSize = true;
+            this.txtTenNN.Location = new System.Drawing.Point(973, 198);
+            this.txtTenNN.Name = "txtTenNN";
+            this.txtTenNN.Size = new System.Drawing.Size(126, 21);
+            this.txtTenNN.TabIndex = 11;
+            this.txtTenNN.Text = "Tên người nhận";
+            // 
             // frm_ChuyenTien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1000, 562);
+            this.ClientSize = new System.Drawing.Size(1428, 557);
+            this.Controls.Add(this.txtTenNN);
+            this.Controls.Add(this.txtTenNC);
+            this.Controls.Add(this.btnCheckTKN);
+            this.Controls.Add(this.btnCheckTKC);
             this.Controls.Add(this.btnThoat);
             this.Controls.Add(this.btnXacNhan);
             this.Controls.Add(this.label3);
@@ -124,6 +170,7 @@ namespace NGANHANG
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frm_ChuyenTien";
             this.Text = "Chuyển tiền";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -139,5 +186,9 @@ namespace NGANHANG
         private System.Windows.Forms.Button btnXacNhan;
         private System.Windows.Forms.Button btnThoat;
         private System.Windows.Forms.TextBox txtTien;
+        private System.Windows.Forms.Button btnCheckTKC;
+        private System.Windows.Forms.Button btnCheckTKN;
+        private System.Windows.Forms.Label txtTenNC;
+        private System.Windows.Forms.Label txtTenNN;
     }
 }

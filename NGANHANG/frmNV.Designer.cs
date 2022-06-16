@@ -327,7 +327,7 @@ namespace NGANHANG
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 728);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 624);
             this.barDockControlBottom.Manager = this.barManager1;
             this.barDockControlBottom.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.barDockControlBottom.Size = new System.Drawing.Size(1558, 20);
@@ -339,7 +339,7 @@ namespace NGANHANG
             this.barDockControlLeft.Location = new System.Drawing.Point(0, 51);
             this.barDockControlLeft.Manager = this.barManager1;
             this.barDockControlLeft.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 677);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 573);
             // 
             // barDockControlRight
             // 
@@ -348,7 +348,7 @@ namespace NGANHANG
             this.barDockControlRight.Location = new System.Drawing.Point(1558, 51);
             this.barDockControlRight.Manager = this.barManager1;
             this.barDockControlRight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 677);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 573);
             // 
             // btnInDSNV
             // 
@@ -544,7 +544,7 @@ namespace NGANHANG
             this.panelControl2.Location = new System.Drawing.Point(0, 312);
             this.panelControl2.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.panelControl2.Name = "panelControl2";
-            this.panelControl2.Size = new System.Drawing.Size(1558, 416);
+            this.panelControl2.Size = new System.Drawing.Size(1558, 312);
             this.panelControl2.TabIndex = 11;
             // 
             // trangThaiXoaCheckBox
@@ -644,7 +644,7 @@ namespace NGANHANG
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1558, 748);
+            this.ClientSize = new System.Drawing.Size(1558, 644);
             this.Controls.Add(this.panelControl2);
             this.Controls.Add(this.gcNhanVien);
             this.Controls.Add(this.panelControl1);

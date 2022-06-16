@@ -1,0 +1,386 @@
+ALTER PROC [dbo].[SP_CHUYENTIEN] (@STKGUI nChar(9), @STKNHAN nChar(9), @TIEN MONEY,@MANV NCHAR(10))
+AS
+SET XACT_ABORT ON	--NEU OFF THI SQL SE BO QUA LENH GAY LOI VA CHAY TIEP
+BEGIN
+	--KIEM TRA STK_GUI VA STK_NHAN CO TON TAI TRONG DB HAY KHONG, SAU DO THI KIEM TRA SO DU NGUOI GUI.
+	IF ( EXISTS( SELECT SOTK FROM TaiKhoan WHERE SOTK=@STKNHAN ) AND 
+			EXISTS( SELECT SOTK FROM TaiKhoan WHERE SOTK=@STKGUI) )
+		BEGIN
+			DECLARE @SODU_NGUOICHUYEN MONEY
+			SELECT @SODU_NGUOICHUYEN = SODU FROM TaiKhoan WHERE @STKGUI = SOTK
+
+			IF @SODU_NGUOICHUYEN < @TIEN
+				RAISERROR('SO DU KHONG DU !!!', 16, 1)
+			ELSE
+				BEGIN
+					BEGIN TRANSACTION
+					BEGIN TRY
+						UPDATE TaiKhoan
+						SET SODU -= @TIEN
+						WHERE @STKGUI = SOTK
+
+						UPDATE TaiKhoan
+						SET SODU += @TIEN
+						WHERE @STKNHAN = SOTK
+
+						INSERT INTO GD_CHUYENTIEN(SOTK_CHUYEN,NGAYGD,SOTIEN,SOTK_NHAN,MANV) 
+							VALUES (@STKGUI,GETDATE(),@TIEN,@STKNHAN,@MANV)
+
+						COMMIT
+					END TRY
+					
+					BEGIN CATCH		-- một số trường hợp bất ngờ có thể xảy ra gây ra lỗi
+						ROLLBACK	-- ví dụ như mất điện khi đang cộng trừ tiền trong tài khoản.
+						DECLARE @ERRORMESSAGE VARCHAR(2000)
+						SELECT @ERRORMESSAGE = 'Lỗi: ' + ERROR_MESSAGE()
+						RAISERROR(@ERRORMESSAGE, 16, 1)
+					END CATCH
+				END
+		END
+	ELSE
+		RAISERROR('SO TAI KHOAN KHONG TON TAI !!!', 16, 1)
+END
+
+
+
+
+
+
+ALTER PROC [dbo].[SP_GUIRUT] (@STK	NCHAR(9), @TIEN MONEY, @LOAIGD NCHAR(2),@MANV NCHAR(10))
+AS
+SET XACT_ABORT ON		-- NEU OFF THI SQL SE BO QUA LENH GAY LOI.
+BEGIN TRANSACTION		-- Nếu chỉ SP chỉ có một lệnh UPDATE thì ta không cần sử dụng giao tác vì nó là giao tác tự động.
+	BEGIN TRY			-- Nhưng SP này ta có 2 lệnh là UPDATE và INSERT.
+		IF EXISTS(SELECT SOTK FROM TaiKhoan WHERE SOTK=@STK)	-- Kiểm tra stk có tồn tại hay không, sau đó xét xem nó là 'RT' hay 'GT'
+			BEGIN
+				DECLARE @SODU MONEY
+				SELECT @SODU=SODU FROM TaiKhoan WHERE @STK=SOTK
+
+				IF @LOAIGD = 'GT'
+					BEGIN
+						UPDATE TaiKhoan
+						SET SODU += @TIEN
+						WHERE @STK = SOTK
+
+						INSERT INTO GD_GOIRUT(SOTK,LOAIGD,NGAYGD,SOTIEN,MANV) 
+							VALUES(@STK,@LOAIGD,GETDATE(),@TIEN,@MANV)
+					END
+
+	
+				ELSE IF @LOAIGD = 'RT'
+					BEGIN
+						IF @SODU < @TIEN
+							RAISERROR('SO DU KHONG DU !!!', 16, 1)
+						ELSE
+							BEGIN
+								UPDATE TaiKhoan
+								SET SODU -= @TIEN
+								WHERE @STK = SOTK
+
+								INSERT INTO GD_GOIRUT(SOTK,LOAIGD,NGAYGD,SOTIEN,MANV) 
+									VALUES(@STK,@LOAIGD,GETDATE(),@TIEN,@MANV)
+							END
+					END
+			END
+		ELSE
+			RAISERROR('SO TAI KHOAN KHONG TON TAI !!!', 16, 1)
+		
+		COMMIT
+	END TRY
+	
+BEGIN CATCH
+	ROLLBACK
+	DECLARE @ERRORMESSAGE VARCHAR(2000)
+	SELECT @ERRORMESSAGE = 'Lỗi: ' + ERROR_MESSAGE()
+	RAISERROR(@ERRORMESSAGE, 16, 1)
+END CATCH
+
+
+
+
+
+
+
+
+
+
+ALTER PROC [dbo].[SP_Lay_Thong_Tin_NV_Tu_Login] @TENLOGIN NVARCHAR(20)
+AS
+BEGIN
+	DECLARE @UID INT
+	DECLARE @MANV NCHAR(10)
+
+	SELECT @UID = UID, @MANV = NAME  FROM SYS.sysusers
+		WHERE SID = SUSER_SID(@TENLOGIN)
+
+	DECLARE @HOVATEN NVARCHAR(50)
+	SELECT @HOVATEN = (HO + ' ' + TEN) FROM NHANVIEN WHERE @MANV = MANV
+
+	IF @HOVATEN IS NULL
+		RAISERROR (N'Nhân viên không tồn tại', 16, 1)
+
+	SELECT MANV = @MANV,
+		   HOVATEN = @HOVATEN,
+		   NHOM = NAME
+	FROM SYS.SYSUSERS 
+	WHERE UID = (SELECT GROUPUID FROM SYS.SYSMEMBERS WHERE MEMBERUID = @UID) AND (NAME = 'NGANHANG' OR NAME = 'CHINHANH')
+END
+
+
+
+
+
+
+
+ALTER PROC [dbo].[SP_kiemtraNV_tu_MANV]
+	@X INT
+AS
+BEGIN
+	DECLARE @ktnv INT
+	SELECT @ktnv = COUNT(*) FROM NhanVien WHERE MANV=@X
+
+	IF @ktnv != 0
+	BEGIN
+		SELECT CAST(1 AS BIT)
+		RETURN 
+	END
+		
+
+	SELECT @ktnv = COUNT(*) FROM LINK1.NGANHANG.dbo.NhanVien WHERE MANV=@X
+
+	IF @ktnv = 0
+	BEGIN
+		SELECT CAST(0 AS BIT)
+		RETURN 
+	END
+
+	SELECT CAST(1 AS BIT)
+END
+
+
+
+
+
+
+ALTER PROC [dbo].[SP_TimKH_tu_CMND] @X NCHAR(10)
+AS
+BEGIN
+	DECLARE @ktkh INT
+	SELECT @ktkh = COUNT(*) FROM KhachHang WHERE CMND=@X
+
+	IF @ktkh != 0
+	BEGIN
+		SELECT CAST(1 AS BIT)
+		RETURN 
+	END
+		
+
+	SELECT @ktkh = COUNT(*) FROM LINK2.NGANHANG.dbo.KhachHang WHERE CMND=@X
+
+	IF @ktkh = 0
+	BEGIN
+		SELECT CAST(0 AS BIT)
+		RETURN 
+	END
+
+	SELECT CAST(1 AS BIT)
+END
+
+
+
+ALTER PROCEDURE [dbo].[sp_create_account]
+	@username NCHAR(10),
+	@loginname NVARCHAR(50),
+	@password NVARCHAR(50)
+AS
+BEGIN
+	SET XACT_ABORT ON
+	BEGIN TRY
+		BEGIN TRANSACTION
+
+		-- Check NhanVien
+		DECLARE @cknv INT
+		SELECT @cknv = COUNT(*) FROM NhanVien WHERE MANV = @username
+		IF @cknv = 0
+			RAISERROR('Mã nhân viên không tồn tại hoặc không thuộc chi nhánh này', 16, 1)	
+
+		DECLARE @sql NVARCHAR(MAX)
+
+		-- Create login
+		SET @sql = 'CREATE LOGIN ' + @loginname + ' WITH PASSWORD = ''' + @password + ''''
+		EXECUTE (@sql)
+
+		-- Create user
+		SET @sql = 'CREATE USER ' + @username + ' FOR LOGIN ' + @loginname
+		EXECUTE (@sql)
+
+		-- Get current (Support Alter role)
+		DECLARE @cusername NCHAR(10)
+		SELECT @cusername = NAME FROM SYS.sysusers WHERE SID = SUSER_SID(SUSER_NAME())
+
+		-- Alter role
+		IF IS_ROLEMEMBER ('ngan_hang', @cusername) = 1
+			SET @sql = 'ALTER ROLE nhan_vien ADD MEMBER ' + @username
+		ELSE IF IS_ROLEMEMBER ('chi_nhanh', @cusername) = 1
+			SET @sql = 'ALTER ROLE chi_nhanh ADD MEMBER ' + @username
+		ELSE
+			RAISERROR('Hành động bị từ chối do không rõ quyền hạn', 16, 1)
+
+		EXECUTE (@sql)
+
+		-- Alter system role
+		SET @sql = 'ALTER SERVER ROLE securityadmin ADD MEMBER ' + @loginname
+		EXECUTE (@sql)
+
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+        ROLLBACK TRANSACTION
+		
+		DECLARE @ErrorMessage VARCHAR(MAX), @ErrorSeverity INT, @ErrorState INT
+		SET @ErrorMessage  = ERROR_MESSAGE()
+		SET @ErrorSeverity = ERROR_SEVERITY()
+		SET @ErrorState    = ERROR_STATE()
+
+		RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState)
+    END CATCH
+END
+
+
+
+
+
+ALTER PROCEDURE [dbo].[sp_tao_tai_khoan_khach_hang]
+	@stk NCHAR(9),
+	@cmnd NCHAR(10)
+AS
+BEGIN
+	SET XACT_ABORT ON
+	BEGIN TRY
+		BEGIN TRANSACTION
+
+		-- Kiem tra su ton tai cua khach hang bang CMND
+		DECLARE @ktkh INT
+		SELECT @ktkh = COUNT(*) FROM KhachHang
+
+		IF @ktkh = 0
+		BEGIN
+			SELECT @ktkh = COUNT(*) FROM LINK1.NGANHANG.DBO.KhachHang WHERE CMND = @cmnd
+
+			if @ktkh = 0
+				RAISERROR(N'Khách hàng không tồn tại', 16, 1)
+		END
+
+		-- Mã chi nhánh hiện tại
+		DECLARE @macn NCHAR(10)
+		SELECT @macn = MACN FROM ChiNhanh
+
+		INSERT INTO TaiKhoan (SOTK, CMND, SODU, MACN)
+		VALUES (@stk, @cmnd, 0, @macn)
+
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+        ROLLBACK TRANSACTION
+		
+		DECLARE @ErrorMessage VARCHAR(MAX), @ErrorSeverity INT, @ErrorState INT
+		SET @ErrorMessage  = ERROR_MESSAGE()
+		SET @ErrorSeverity = ERROR_SEVERITY()
+		SET @ErrorState    = ERROR_STATE()
+
+		RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState)
+    END CATCH
+END
+
+
+
+
+
+
+ALTER PROCEDURE [dbo].[sp_tao_tai_khoan_nhan_vien]
+	@username NCHAR(10),
+	@loginname NVARCHAR(50),
+	@password NVARCHAR(50)
+AS
+BEGIN
+	-- Check NhanVien
+	DECLARE @cknv INT
+	SELECT @cknv = COUNT(*) FROM NhanVien WHERE MANV = @username
+	IF @cknv = 0
+	BEGIN
+		RAISERROR('Mã nhân viên không tồn tại hoặc không thuộc chi nhánh này', 16, 1)
+		RETURN 1
+	END
+
+	DECLARE @rs INT
+
+	-- add login
+	EXEC @rs = sp_addlogin @loginname, @password
+	IF @rs = 1
+		RETURN 1
+
+	-- Get current (Support Alter role)
+	DECLARE @cusername NCHAR(10), @role NVARCHAR(50)
+	SELECT @cusername = NAME FROM SYS.sysusers WHERE SID = SUSER_SID(SUSER_NAME())
+
+	-- add user
+	EXEC @rs = sp_grantdbaccess @loginname, @username
+	IF @rs = 1
+	BEGIN
+		EXEC sp_droplogin @loginname
+		RETURN 1
+	END
+
+	-- Alter role
+	IF IS_ROLEMEMBER ('NGANHANG', @cusername) = 1
+		SET @role = 'NGANHANG'
+	ELSE IF IS_ROLEMEMBER ('CHINHANH', @cusername) = 1
+		SET @role = 'CHINHANH'
+
+	EXEC sp_addrolemember @role, @username
+
+	-- add server role
+	EXEC sp_addsrvrolemember @loginname, 'securityadmin'
+END
+
+
+
+
+
+
+
+
+ALTER PROCEDURE [dbo].[sp_xoa_tai_khoan_nhan_vien]
+	@manv NCHAR(10)
+AS
+BEGIN
+	DECLARE @loginname NVARCHAR(30)
+
+	-- Find login name  by @manv
+	SELECT @loginname = L.name FROM sys.sysusers U
+	INNER JOIN sys.syslogins L ON U.sid = L.sid
+	WHERE U.name = @manv
+
+	EXEC sp_revokedbaccess @manv
+	EXEC sp_droplogin @loginname
+END
+
+
+
+
+
+
+ALTER PROCEDURE [dbo].[SP_ttkh_tu_sotk]
+	@sotk NCHAR(9)
+AS
+BEGIN
+	DECLARE @CMND NCHAR(10)
+	SELECT @CMND = CMND FROM TaiKhoan WHERE SOTK = @sotk
+
+	IF (EXISTS(SELECT * FROM KhachHang WHERE CMND = @CMND))
+		SELECT * FROM KhachHang WHERE CMND = @CMND
+	ELSE IF (EXISTS(SELECT * FROM LINK2.NGANHANG.DBO.KhachHang WHERE CMND = @CMND))
+		SELECT * FROM LINK2.NGANHANG.DBO.KhachHang WHERE CMND = @CMND
+	ELSE
+		RAISERROR('Số tài khoản không tồn tại', 16, 1)
+END
