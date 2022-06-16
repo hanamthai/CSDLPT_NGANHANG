@@ -12,9 +12,9 @@
   + form login, logout
   + decentralization
 ## Installation:
-Open CMD and run [this](https://github.com/metailurini/cinema-mananger.git) code.
+Open CMD and run [this](https://github.com/hanamthai/CSDLPT_NGANHANG.git) code.
 ```bash
-https://github.com/metailurini/cinema-mananger.git
+https://github.com/hanamthai/CSDLPT_NGANHANG.git
 ```
 ## Usage:
 You just need to clone the project to your local computer and open it with visual studio.
