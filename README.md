@@ -17,27 +17,42 @@
 - decentralization
 
 ## Installation:
-<<<<<<< HEAD
 
-Open CMD and run [this](https://github.com/metailurini/cinema-mananger.git) code.
-
-=======
 Open CMD and run [this](https://github.com/hanamthai/CSDLPT_NGANHANG.git) code.
->>>>>>> 58aa27c4627f5576eb7b513c0a08f6c5fcbc06c3
 ```bash
 https://github.com/hanamthai/CSDLPT_NGANHANG.git
 ```
 
 ## Usage:
 
+### Download DevExpress:
+  ```bash
+  https://drive.google.com/file/d/12bLKSbfklrvRY6NpCprJdHTdlipatwhm/view?usp=sharing
+  ```
+  <img src="image/download01.png" >
+  
+### Download package "Windown Form":
+- Search Visual Studio Installer
+<img src="image/download1-1.png">
+- Then you select "modify"
+<img src="image/download1-2.png">
+<img src="image/download1-3.png">
+
 You just need to clone the project to your local computer and open it with visual studio.
-https://drive.google.com/file/d/12bLKSbfklrvRY6NpCprJdHTdlipatwhm/view?usp=sharing
+
+## Demo:
+<img src="image/frm_Login.png">
+<img src="image/frm_CT.png">
+<img src="image/frm_RT.png">
 
 ### Note:
 
 ```diff
 - You need to create SP on main server in sql server and push them down to fragmented sites.
 - I have saved the SP in the file stored_procedure.txt
+- The project part only accounts for 40% of the total score, the remaining 60% is theory, so you need to learn the theory well.
+- I have saved the theory part at cauhoi.txt, all the questions that Mr. Luu Nguyen Ky Thu are there.
+- Try your best.
 ```
 
 ## Contributer:
