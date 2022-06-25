@@ -1,0 +1,318 @@
+Câu Hỏi 1: Sau khi phân tán xong thì có 1 trường dữ liệu là rowguild. Vậy rowguid được sinh ra để làm gì?
+
+Đáp: Hỗ trợ quá trình đồng bộ dữ liệu từ site phân mảnh về site chủ và ngược lại.
+
+Câu Hỏi 2: Login Name là gì ? Username là gì ? Mà chúng gây lú thế nhỉ ?!
+
+Đáp:
+
+Login Name là tài khoản chúng ta dùng để đăng nhập vào một server. Ví dụ như tài khoản SA - tài khoản phổ biến khi đăng nhập SQL Server để tăng độ bảo mật. Sau khi kết nối thành công tới một server, chọn Security -> Logins sẽ thấy tài khoản SA
+
+Username là tài khoản mà chúng ta dùng để làm việc trên một cơ sở dữ liệu. Ví dụ trên cơ sở dữ liệu QLVT, chọn vào QLVT -> Security -> Users sẽ thấy các tài khoản có thể làm việc trên cơ sở dữ liệu này
+
+Câu Hỏi 3: db_dataReader, db_dataWriter, db_securityAdmin,.... rồi db_accessAdmin là gì ? Chúng dùng để làm gì ?
+
+Đáp: chúng là những quyền mà một tài khoản kiểu login name có thể được chỉ định & quyết định xem chúng có thể làm những gì trên cơ sở dữ liệu đó.
+
+1.db_dataReader là quyền chỉ xem dữ liệu, không thể thêm mới hoặc sửa đổi dữ liệu
+
+2.db_dataWriter là quyền chỉ ghi dữ liệu, dĩ nhiên nếu ghi được thì coi như cũng đọc được dữ liệu
+
+3.db_securityAdmin là quyền tạo các tài khoản login name, tài khoản này dùng để đăng nhập vào server
+
+4.db_accessAdmin là quyền tạo các tài khoản username, tài khoản dùng để thao tác trên một cơ sơ dữ liệu nhất định
+
+5.db_owner là quyền cao nhất với một cơ sở dữ liệu, quyền này cho phép xem, thêm, xóa, sửa tất cả dữ liệu & có thể tạo tài khoản login name và username mà không có giới hạn nào( kiểu bạn là chủ nhà thì làm gì cũng được ấy )
+
+Câu Hỏi 4: Có 2 cách để viết Stored Procedure. Cách 1 đã được trình bình ở mục Stored Procedure. Cách số 2 là viết Stored Procedure thủ công tại từng phân mảnh. Cách làm nào hiệu quả hơn ?
+
+Đáp: Cách làm thứ nhất hay hơn. Nếu ta chỉnh sửa stored procedure trên server gốc thì sự thay đổi sẽ tự động được cập nhật xuống các server phân mảnh. Còn cách thứ 2 thì phải sửa thủ công trên từng phân mảnh.
+
+Câu Hỏi 5: Nếu sửa Stored Procedure trên phân mảnh thì nó có đồng bộ về các phân mảnh khác và server gốc, điều này là đúng hay sai ?
+
+Đáp: Sai. Code chỉ đồng bộ theo một chiều từ server gốc tới các phân mảnh. Không có chiều ngược lại.
+
+Câu Hỏi 6: Sửa dữ liệu tại server gốc thì phân mảnh có nhận được không ? Nếu ngược lại, từ server phân mảnh về server gốc thì có nhận được không ?
+
+Đáp: Có, dữ liệu đồng bộ theo 2 chiều.
+
+Câu Hỏi 7: Nêu ưu và nhược điểm khi ưu tiên tìm kiếm trên site phân mảnh trước khi về site chủ.
+
+Đáp:
+
+Ưu điểm: server gốc lúc nào cũng hoạt động nên luôn truy vấn được dữ liệu mong muốn
+
+Nhược điểm: Không thể che dấu được hoàn toàn các thông tin nhạy cảm giữa các site phân mảnh. Việc cấp 1 tài khoản để vào site chủ có thể giúp người dùng đó xem được dữ liệu của site khác
+
+Câu Hỏi 8: Muốn thực thi một câu lệnh store procedure, view, function thì ta làm như nào ?
+
+Đáp: Ta sẽ tạo một đối tượng là SqlCommand rồi nhúng vào các đối số cần thiết vào
+
+Câu Hỏi 9: Giao tác là gì ? Để viết giao tác cần bật dịch vụ gì ?
+
+Đáp: Giao tác là một dãy các thao tác đọc và ghi dữ liệu cùng với các bước tính toán nhất quán ( Begin Trans, Commit , Rollback,Begin distributed trans) để giải quyết các tình huống khi dữ liệu bị mất tính nhất quán khi có nhiều truy xuất đồng thời
+
+Để viết giao tác cần phải bật dịch vụ MSDTC - Miscrosoft Distribute Transaction Coordinator
+
+Câu Hỏi 10: ý nghĩa của Begin trans, commit, rollback & Begin distributed trans là gì ?
+
+Đáp:
+
+Begin Trans: bắt đầu giao tác
+
+Commit : xác nhận thành công
+
+Rollback( hoặc abort) : hủy bỏ giao tác và trả lại dữ liệu cũ
+
+Begin distributed trans : câu lệnh mở đầu giao tác phân tán
+
+Câu Hỏi 11: Nêu những tính chất giao tác ?
+
+Đáp: Có tất cả 4 tính chất với giao tác gồm:
+
+(1) tính nguyên tử: 1 giao tác có nhiều tập lệnh thì mọi câu lệnh hoặc thành công hoặc nếu 1 lệnh thất bại thì tất cả thất bại
+
+(2) tính nhất quán: đảm bảo tất cả rằng buộc. Mọi lệnh đều được chạy
+
+(3) tính biệt lập: một giao tác đang thực thi thì ko làm lộ các kết quả của nó cho những giao thức khác đang cùng hoạt động trước khi nó hoàn thành.
+
+(4) tính bền vững: một giao tác đã được commit thì dữ liệu đó được giữ nguyên và không thể rollback
+
+Câu Hỏi 12: Dữ liệu rác là gì ?
+
+Đáp: là dữ liệu sinh ra có thể chưa phải là dữ liệu đã được commit nếu một giao tác khác đồng thời vào và lấy giao tác này ra thì dữ liệu này là ko chính xác.
+
+Câu Hỏi 13: Có mấy loại giao tác ?
+
+Đáp: Có 2 loại giao tác là tập trung và phân tán
+
+Giao tác tập trung có 2 loại: giao tác phẳng và giao tác lồng
+
+(1) Giao tác phẳng có điểm khởi đầu duy nhất ( begin transaction ) và một điểm kết thúc duy nhất ( end transaction )
+
+(2) Giao tác lồng chứa nhiều giao tác với điểm khởi đầu và duy nhất riêng biệt.
+
+Giao tác phân tán chỉ có 1 loại duy nhất: giao tác phẳng
+
+Câu Hỏi 14: XACT_ABORT là gì ? Nó nhận được mấy giá trị ?
+
+Đáp: XACT_ABORT: đây là tùy chọn kết nối. Nó chỉ nhận 2 giá trị là ON & OFF.
+
+Nếu là OFF, SQL Server sẽ bỏ qua lệnh gây lỗi trong transaction và tiếp tục thực thi các lệnh còn lại.
+
+Nếu là ON, SQL Server sẽ hủy bỏ toàn bộ transaction nếu nó gặp lệnh bị lỗi và trả lại dữ liệu về ban đầu.
+
+Câu Hỏi 15: Khi viết 1 stored procedure khi nào ta không dùng begin transaction , không dùng commit ... nhưng vẫn được coi là 1 giao tác ?
+
+Đáp: khi ta sử dụng chỉ một lệnh UPDATE - DELETE - INSERT duy nhất. Còn nếu có 2 lệnh UPDATE - DELETE - INSERT thì phải dùng cú pháp begin transaction và commit
+
+Câu Hỏi 16: Dịch vụ MS TDC là gì ?
+
+Đáp: Dịch vụ MS TDC là Microsoft Distributed Transaction Coordinator. Nó đảm bảo tất cả cập nhật được thực thi ở tất cả các phân mảnh hoặc trong trường hợp lỗi thì xem như chưa thực hiện thao tác nào hết.
+
+Câu Hỏi 17: Vị từ thích hợp là gì ?
+
+Đáp: Thỏa tính đầy đủ và tính cực tiểu
+
+Câu Hỏi 18: Tiêu chí đầy đủ và tiêu chí cực tiểu là gì ?
+
+Đáp:
+
+Tiêu chí đầy đủ là ta có nhiều stored procedure thì xác suất nó truy xuất tới các phân mảnh là như nhau.
+
+Tiêu chí cực tiểu là mỗi site được sinh ra phải được sử dụng tới trong một stored procedure nào đó.
+
+Câu Hỏi 19: Vị từ là gì ? Một vị từ đơn giản là gì ?
+
+Đáp: Vị từ là Mệnh đề login có nhiều điều kiện
+
+Một vị từ đơn giản là vị từ có kiểu: MACN = 'CN1',... . Tức vế trái là tên thuộc tính và vế phải là tên giá trị.
+
+Một vị từ sơ cấp: MACN = ( CN1 hội CN2 ).
+
+Câu Hỏi 20: Một vị từ "thích hợp" là gì ?
+
+Đáp: Một vị từ "thích hợp" nghĩa là khi tạo ra 1 phân mảnh "thích hợp" thì phải có stored procedure sử dụng tới phân mảnh này.
+
+Câu Hỏi 21: Sự trong suốt phân tán là gì ?
+
+Đáp: Sự trong suốt phân tán: khi 1 stored procedure( sp ) được thực thi ở 1 server phân mảnh bấy kì thì cũng hoạt động tốt trên các phân mảnh còn lại - người dùng không cảm thấy được sp đang chạy trên hệ thông phân tán.
+
+Note: Chúng ta đứng ở vị trí thứ 3 để lập trình. Luôn ưu tiên tìm ở phân mảnh cục bộ trước khi sang các phân mảnh khác.
+
+Câu Hỏi 22: Có mấy mức độ trong suốt phân tán là gì ?
+
+Đáp: Có 4 mức độ trong suốt phân tán
+
+(1) Mức cao nhất: Không cần chỉ ra phân mảnh cần truy vấn. Người dùng không cảm giác là đang thao tác trên một câu truy vấn phân tán.
+
+(2) Sự trong suốt vị trí: Chúng ta chỉ cần chỉ ra tên TABLE cần phải truy vấn.
+
+(3) Sự trong suốt ánh xạ cục bộ: Chúng ta cần chỉ rõ tên phân mảnh và vị trí cấp phát của chúng
+
+(4) Không trong suốt: Chúng ta phải viết lệnh để đến đúng vị trí database cần thao tác. Tuy nhiên, do chúng ta đã đặt tên các cơ sở dữ liệu giốngnhau ở mọi phân mảnh. Tên LINK server cũng trùng tên nên không phải bận tâm đến mức này
+
+Note: người dùng sẽ sử dụng ứng dụng ở mức cao nhất. Còn người lập trình như chúng ta sẽ đứng ở mức thứ 3.
+
+Câu Hỏi 23: Điều kiện để có thể phân tán được cơ sở dữ liệu ? Có mấy bước để phân tán cơ sở dữ liệu ?
+
+Đáp: có dịch vụ SQL Server Agent
+
+Có 3 bước để thực hiện phân tán cơ sở dữ liệu
+
+(1) Định nghĩa Server Distributor : chứa Database distribution
+
+(2) Định nghĩa publication : 1 container chứa các article (table, view, stored procedure, UDF).
+
+Trong đó, phải chỉ rõ các server :
+
+Publisher - chứa bản gốc cơ sở dữ liệu
+
+Distributor - điều phối phân tán dữ liệu
+
+(3) Định nghĩa subscription (database): 1 container nhận publication. Trong đó, phải chỉ rõ server Subscriber - chứa cơ sở dữ liệu sau khi phân tán
+
+Câu Hỏi 23: Có mấy hình thức phân mảnh ?
+
+Đáp: Có 3 hình thức phân mảnh gồm phân mảnh ngang, phân mảnh dọc & phân mảnh hỗn hợp.
+
+Câu Hỏi 24: Nêu đặc điểm của phân mảnh ngang ?
+
+Đáp: Phân mảnh ngang là chia một quan hệ theo các bộ. Mỗi phân mảnh ngang là tập con của quan hệ.
+
+Trong phân mảnh ngang bao gồm phân mảnh ngang nguyên thủy & phân mảnh ngang dẫn xuất
+
+Phân mảnh ngang nguyên thủy là phân mảnh của 1 quan hệ dựa trên 1 vị từ được định nghĩa trên quan hệ đó
+
+Phân mảnh ngang dẫn xuất là phân mảng của 1 quan hệ dựa trên vị từ được định nghĩa trên quan hệ khác.
+
+Ví dụ với đề quản lý vật tư thì
+
+MaChiNhanh = 'CN1' -> phân mảnh ngang nguyên thủy
+
+NHANVIEN.MaKho = KHOHANG.MaKho -> phân mảnh ngang dẫn xuất
+
+Nói cách khác 'CN1' và 'CN2' là các vị từ.
+
+Câu Hỏi 24: Nêu đặc điểm của phân mảnh dọc ?
+
+Đáp: Phân mảnh dọc là phân mảnh dựa trên khóa chính của một quan hệ ( phải có khóa chính để đảm bảo tính tái thiết)
+
+Gỉa sử, NHANVIEN( id, ho , ten, dia chi, luong, ngay sinh, ma chi nhanh ) thì khi tạo phân mảnh dọc sẽ thành
+
+NHANVIEN(id, ho, ten, ngay sinh, ma chi nhanh) trong đó MaChiNhanh là khóa ngoại thì phải cho phép NULL
+
+Câu Hỏi 25: Nêu đặc điểm của phân mảnh hỗn hợp ?
+
+Đáp: Là sự kết hợp của 2 cách phân mảnh ngang và dọc. Khi hợp các phân mảnh theo 2 cách này thì cơ sở dữ liệu tạo thành chính là cơ sở dữ liệu ban đầu.
+
+Câu Hỏi 25: Có mấy quy tắc phân mảnh ?
+
+Đáp: Có 3 quy tắc phân mảnh
+
+(1) Tính đầy đủ: xét trên góc độ là QUAN HỆ. Mỗi mục dữ liệu ít nhất phải nằm ở 1 phân mảnh. Thì không bị mất thông tin
+
+(2) Tính tái thiết: thường thì thỏa mản tính đầy đủ sẽ thỏa mãn tính tái thiết.
+
+(3) Tính tách biệt: mỗi mục dữ liệu chỉ nằm ở một phân mảnh duy nhất. Khi ghép các phân mảnh thì database sẽ đầy đủ như ban đầu. Tức nếu TEN ở phân mảnh 1 thì sẽ không xuất hiện ở phân mảnh 2
+
+Note Thực tế, tính tách biệt dễ bị vi phạm vì NHÂN BẢN giúp dữ liệu tồn tại ở cả 2 mảnh. Bắt buộc tính đầy đủ phải thỏa mãn. Nếu thỏa mãn thì tính tái thiết cũng sẽ được bảo đảm.
+
+Câu Hỏi 26: Run on continue khác run on demand ở điểm nào ?
+
+Đáp: Run on continue làm tính nhất quán cao, dữ liệu đồng bộ ngay lập tức. Run on demand tính tự quản cao. Các site có thể disconnect. Các thay đổi không phản ảnh tức thời tới site chủ
+
+Câu Hỏi 27: Snapshot folder là gì ? ?
+
+Đáp: Folder chứa dữ liệu trung gian để đồng bộ dữ liệu từ các phân mảnh về site chủ và ngược lại. Là folder chứa dữ liệu để đẩy qua đẩy lại. Phải là network path(shared folder)
+
+Câu Hỏi 28: Tại sao trả về mã nhân viên khi dùng sp_DangNhap ?
+
+Đáp: để gán tự động cho các form có mã nhân viên
+
+Câu Hỏi 29: Bốn thuộc tính quan trọng của combo box ?
+
+Đáp:
+
+data source chứa danh sách dữ liệu cung cấp cho nó
+
+display member chứa tên field mình muốn hiển thị
+
+value member chứa field dữ liệu mình muốn lấy
+
+selected index change phương thức thay đổi giá trị
+
+Câu Hỏi 30: Vì sao ta phải dùng Remote Login ?
+
+Đáp: Cho phép truy cập dữ liệu khi đứng từ server này sang server khác.
+
+Câu Hỏi 31: Có những cách nào để tối ưu hóa truy vấn ?
+
+Đáp: Có 5 cách để tối ưu hóa một câu truy vấn
+
+Dùng phép chọn, chiếu trước, phép kết sau
+Khử phép kết (nếu được)
+Nếu 1 điều kiện xuất hiện nhiều lần trong WHERE thì dùng các phép biến đổi tương đương để cho điều kiện đó xuất hiện 1 lần
+Trong mệnh đề AND, điều kiện nào có xác suất sai cao thì đặt ở đầu ; OR thì ngược lại.
+Field tham gia trong điều kiện truy vấn nên được sắp thứ tự trước & thứ tự này phải đc sử dụng trong mệnh đề truy vấn với WITH (INDEX=ten_index)
+Câu Hỏi 32: Thế nào là một Stored Procedure trong suốt ? Điều kiện để viết Stored Procedure trong suốt ?
+
+Đáp: Stored Procedure được coi là trong suốt nếu ta cho thực thi ở 1 server thì vẫn cho thực thi được ở những server còn lại mà không cần chỉ rõ đường dẫn đến table cần truy xuất
+
+Hoặc có thể trả lời
+
+Stored Procedure trong suốt là Stored Procedure mà khi ta cho thực thi ở bất kì phân mảnh nào đều cho kết quả giống nhau
+
+Điều kiện để viết Stored Procedure trong suốt là ta cần có LINK SERVER & tên database giống nhau
+
+Câu Hỏi 33: Trong database, cái nào là nhân bản, cái nào là phân hoạch ?
+
+Đáp: Mở cây dẫn xuất ra xem, cái nào không có trong cây dẫn xuất là nhân bản, cái đầu tiên là phân mảnh ngang nguyên thủy
+
+Câu Hỏi 34: Nếu đã phân tán xong cơ sở dữ liệu, muốn thay đổi cấu trúc | thứ tự các cột trong table của server gốc thì làm sao ?
+
+Đáp: Có thể thay đổi bằng cách viết stored procedure dùng lệnh ALTER TABLE ở server gốc sau đó đồng bộ xuống các server phân mảnh
+
+Câu Hỏi 35: Dữ liệu sau khi nhập form sẽ được đẩy về đâu ?
+
+Đáp: Đẩy về publisher sau đó đồng bộ xuống các subcriber.
+
+Câu Hỏi 36: Trong các table, cái nào mang tính đầy dủ, cái nào vi phạm tính tách biệt ?
+
+Đáp: Các table nhân bản thì vi phạm tính tách biệt, tất cả các table còn lại thì mang tính đầy đủ.
+
+Câu Hỏi 37: Giao tác tập trung với giao tác phân tán giống và khác nhau như thế nào ?
+
+Đáp:
+
+Điểm khác : Giao tác thì thực thi trên môi trường cơ sở dữ liệu tập trung (gồm có giao tác phẳng và giao tác lồng), còn giao tác phân tán thì thực thi trên môi trường cơ sở dữ liệu phân tán.
+
+Điểm giống : 4 tính chất giao tác.
+
+Câu Hỏi 38: Login Name nằm trong table nào?
+
+Đáp: Nằm trong table sys.sysuser trong Database đó
+
+Câu Hỏi 39: Tại sao biết user liên kết với login nào?
+
+Đáp: Username và loginname liên kết với nhau qua trường sid (trên user và login đều có sid) nên từ loginname biết được username từ sid
+
+Câu Hỏi 40: Tên nhóm quyền nằm trong table nào ?
+
+Đáp: Nằm trong table sys.sysuser trong Database đó
+
+Câu Hỏi 41: Ưu | khuyết điểm của nhân bản ?
+
+Đáp: Truy xuất nhanh, đứng ở đâu cũng có thể select được. Nhưng update chậm vì có quá nhiều bản sao
+
+Câu Hỏi 42: Ưu | khuyết điểm của phân hoạch ?
+
+Đáp: Select chậm nhưng insert và update nhanh do chỉ thao thác trên server gốc hoặc server phân mảnh cần truy xuất.
+
+Câu Hỏi 42: Tại sao table đó nhân bản?
+
+Đáp:
+
+Trong đề vật tư thì vật tư nhân bản vì vật tư có thể có ở chi nhánh này cũng có thể có ở chi nhánh khác.
+
+Trong đề trắc nghiệm thì giáo viên nhân bản vì giáo viên có thể dạy ở cở sở này cũng có thể dạy ở cơ sở khác, bộ đề đi theo giáo viên nên cũng nhân bản. Giáo viên cở sở 1 có thể dạy ở cở sở 2 nhưng không thể đăng kí thi cho lớp ở cơ sở 2.
