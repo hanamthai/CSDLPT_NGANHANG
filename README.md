@@ -17,11 +17,15 @@
 - decentralization
 
 ## Installation:
+<<<<<<< HEAD
 
 Open CMD and run [this](https://github.com/metailurini/cinema-mananger.git) code.
 
+=======
+Open CMD and run [this](https://github.com/hanamthai/CSDLPT_NGANHANG.git) code.
+>>>>>>> 58aa27c4627f5576eb7b513c0a08f6c5fcbc06c3
 ```bash
-https://github.com/metailurini/cinema-mananger.git
+https://github.com/hanamthai/CSDLPT_NGANHANG.git
 ```
 
 ## Usage:
