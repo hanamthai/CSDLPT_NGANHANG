@@ -20,7 +20,7 @@
 
 Open CMD and run [this](https://github.com/hanamthai/CSDLPT_NGANHANG.git) code.
 ```bash
-https://github.com/hanamthai/CSDLPT_NGANHANG.git
+git clone https://github.com/hanamthai/CSDLPT_NGANHANG.git
 ```
 
 ## Usage:
